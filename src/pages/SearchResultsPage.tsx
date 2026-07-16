@@ -118,16 +118,17 @@ export default function SearchResultsPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredApartments.map((apt) => (
-                  <ApartmentCard
-                    key={apt.id}
-                    apartment={apt}
-                    isLiked={likedIds.has(apt.id)}
-                    onToggleLike={toggleLike}
-                  />
+                  <li key={apt.id}>
+                    <ApartmentCard
+                      apartment={apt}
+                      isLiked={likedIds.has(apt.id)}
+                      onToggleLike={toggleLike}
+                    />
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
           </main>
         </div>

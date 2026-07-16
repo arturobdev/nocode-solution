@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import FilterControls from '@/components/search/FilterControls'
 import ApartmentCard from '@/components/search/ApartmentCard'
 import { useSearchResults } from '@/hooks/useSearchResults'
+import { SearchSkeleton } from '@/components/skeletons/SearchSkeleton'
 import type { SortOption } from '@/hooks/useSearchResults'
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
@@ -23,6 +24,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 ]
 
 export default function SearchResultsPage() {
+  const [loading, setLoading] = useState(true)
   const {
     filters,
     setFilters,
@@ -37,6 +39,13 @@ export default function SearchResultsPage() {
   } = useSearchResults()
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (loading) return <SearchSkeleton />
 
   const filterControlsProps = {
     filters,

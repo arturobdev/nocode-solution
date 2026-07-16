@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CircleCheckBig, Home, LayoutDashboard } from 'lucide-react'
 import type { Booking } from '@/types'
@@ -6,12 +6,19 @@ import { useStore } from '@/store/useStore'
 import { generateBookingNumber } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import BookingDetailsCard from '@/components/apartment/BookingDetailsCard'
+import { BookingConfirmationSkeleton } from '@/components/skeletons/BookingConfirmationSkeleton'
 
 export default function BookingConfirmationPage() {
   const location = useLocation()
   const booking = location.state?.booking as Booking | undefined
   const { addBooking } = useStore()
   const addedRef = useRef(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     if (booking && !addedRef.current) {
@@ -20,6 +27,8 @@ export default function BookingConfirmationPage() {
       addBooking({ ...booking, bookingNumber })
     }
   }, [booking, addBooking])
+
+  if (loading) return <BookingConfirmationSkeleton />
 
   if (!booking) {
     return (

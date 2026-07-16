@@ -58,7 +58,7 @@ export default function HouseRules() {
       </h2>
 
       <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
-        <Accordion type="single" collapsible defaultValue="item-0">
+        <Accordion type="single" collapsible>
           {rules.map((rule, index) => {
             const Icon = rule.icon
             return (

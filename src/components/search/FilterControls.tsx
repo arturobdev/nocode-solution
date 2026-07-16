@@ -52,7 +52,17 @@ export default function FilterControls({
             placeholder="Min"
             min="0"
             value={filters.minPrice}
-            onChange={(e) => onFiltersChange((f) => ({ ...f, minPrice: e.target.value }))}
+            onChange={(e) => {
+              const raw = e.target.value
+              if (raw !== '' && Number(raw) < 0) return
+              onFiltersChange((f) => {
+                const next = { ...f, minPrice: raw }
+                if (raw !== '' && f.maxPrice !== '' && Number(raw) > Number(f.maxPrice)) {
+                  next.maxPrice = raw
+                }
+                return next
+              })
+            }}
             className="h-9"
           />
           <span className="flex items-center text-neutral-600">-</span>
@@ -61,7 +71,17 @@ export default function FilterControls({
             placeholder="Max"
             min="0"
             value={filters.maxPrice}
-            onChange={(e) => onFiltersChange((f) => ({ ...f, maxPrice: e.target.value }))}
+            onChange={(e) => {
+              const raw = e.target.value
+              if (raw !== '' && Number(raw) < 0) return
+              onFiltersChange((f) => {
+                const next = { ...f, maxPrice: raw }
+                if (raw !== '' && f.minPrice !== '' && Number(raw) < Number(f.minPrice)) {
+                  next.minPrice = raw
+                }
+                return next
+              })
+            }}
             className="h-9"
           />
         </div>

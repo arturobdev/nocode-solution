@@ -38,7 +38,7 @@ export default function SafetySection() {
       </h2>
 
       <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
-        <Accordion type="single" collapsible defaultValue="item-0">
+        <Accordion type="single" collapsible>
           {SAFETY_FEATURES.map((feature, index) => {
             const Icon = feature.icon
             return (

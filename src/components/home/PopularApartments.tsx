@@ -9,7 +9,7 @@ function ApartmentCard({ apartment }: { apartment: Apartment }) {
   const { t } = useTranslation()
 
   return (
-    <li>
+    <li className="min-w-[280px] sm:min-w-0">
       <article className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg flex flex-col h-full">
         <div className="relative aspect-video">
           <img src={apartment.image} alt={apartment.name} className="w-full h-full object-cover" />
@@ -92,7 +92,7 @@ export default function PopularApartments() {
           </Link>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:pb-0 sm:gap-6">
           {featuredApartments.map((apartment) => (
             <ApartmentCard key={apartment.id} apartment={apartment} />
           ))}
@@ -101,7 +101,7 @@ export default function PopularApartments() {
         <div className="mt-8 text-center sm:hidden">
           <Link
             to="/search"
-            className="text-primary font-medium hover:text-primary-light transition-colors"
+            className="inline-flex items-center gap-1 text-primary font-medium hover:text-primary-light transition-colors"
           >
             {t('common.viewAll')} →
           </Link>

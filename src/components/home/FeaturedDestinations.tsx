@@ -11,7 +11,7 @@ function DestinationCard({ destination }: DestinationCardProps) {
   const { t } = useTranslation()
 
   return (
-    <li>
+    <li className="min-w-[260px] sm:min-w-0">
       <article className="group relative block rounded-xl overflow-hidden aspect-4/3 transition-transform duration-300 hover:scale-[1.02]">
         <img
           src={destination.image}
@@ -51,11 +51,20 @@ export default function FeaturedDestinations() {
           <p className="text-neutral-600 text-lg max-w-xl mx-auto">{t('destinations.subtitle')}</p>
         </div>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 sm:gap-6">
           {destinations.map((destination) => (
             <DestinationCard key={destination.id} destination={destination} />
           ))}
         </ul>
+
+        <div className="mt-8 text-center sm:hidden">
+          <Link
+            to="/search"
+            className="inline-flex items-center gap-1 text-primary font-medium hover:text-primary-light transition-colors"
+          >
+            {t('common.viewAll')} →
+          </Link>
+        </div>
       </div>
     </section>
   )

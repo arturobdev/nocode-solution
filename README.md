@@ -77,3 +77,27 @@ src/
 ## Data
 
 The app uses mock data with 12 apartments across 6 cities, 18 reviews, 22 bookings, and 6 destinations. All apartment images are sourced from Unsplash.
+
+## Deployment
+
+This project is configured for Vercel deployment with `vercel.json`.
+
+### Vercel (Recommended)
+
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+2. Import the project on [vercel.com/new](https://vercel.com/new)
+3. Vercel auto-detects Vite and configures the build
+4. Deploy
+
+The `vercel.json` includes:
+- **SPA rewrite**: Routes like `/search` or `/apartment/1` serve `index.html` for client-side routing
+- **Asset caching**: Vite-hashed files in `/assets` get immutable caching headers
+- **Security headers**: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`
+
+### Vercel CLI
+
+```bash
+npm i -g vercel
+vercel          # preview deployment
+vercel --prod   # production deployment
+```

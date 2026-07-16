@@ -1,32 +1,79 @@
-# React + TypeScript + Vite
+# StayFinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A rental apartment booking platform built with React 19, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework:** React 19 + TypeScript 6
+- **Build Tool:** Vite 8
+- **Styling:** Tailwind CSS 4
+- **Routing:** React Router DOM 7
+- **State Management:** Zustand 5
+- **Forms:** React Hook Form + Zod validation
+- **UI Components:** Radix UI (shadcn/ui pattern)
+- **Charts:** Recharts (admin dashboard)
+- **Icons:** Lucide React
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Install dependencies
+npm install
 
-## Expanding the Oxlint configuration
+# Start dev server
+npm run dev
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+# Build for production
+npm run build
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Preview production build
+npm run preview
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Run ESLint with auto-fix |
+| `npm run format` | Format code with Prettier |
+| `npm run format:check` | Check formatting without writing |
+
+## Routes
+
+| Path | Page | Description |
+|------|------|-------------|
+| `/` | HomePage | Hero section, featured destinations, popular apartments, benefits, testimonials |
+| `/search` | SearchResultsPage | Filterable and sortable apartment listing with sidebar filters |
+| `/apartment/:id` | ApartmentDetailsPage | Apartment detail view with image gallery, booking sidebar, amenities, and reviews |
+| `/booking-confirmation` | BookingConfirmationPage | Post-booking confirmation screen |
+| `/admin` | AdminDashboardPage | Admin dashboard with stats, revenue chart, and bookings table |
+
+## Project Structure
+
+```
+src/
+├── main.tsx                 # Application entry point
+├── App.tsx                  # Router configuration
+├── assets/                  # Static assets (hero image, logo)
+├── components/
+│   ├── admin/               # Admin dashboard components
+│   ├── apartment/           # Apartment detail page components
+│   ├── home/                # Homepage section components
+│   ├── layout/              # Layout, Navbar, Footer, ScrollToTop
+│   ├── search/              # Search page components (ApartmentCard, filters)
+│   └── ui/                  # Reusable UI primitives (shadcn/ui)
+├── data/                    # Mock data (apartments, destinations, bookings, reviews)
+├── hooks/                   # Custom hooks (useSearchResults)
+├── lib/                     # Utility functions (cn, formatPrice, etc.)
+├── pages/                   # Page-level components
+├── store/                   # Zustand store
+└── types/                   # TypeScript type definitions
+```
+
+## Data
+
+The app uses mock data with 12 apartments across 6 cities, 18 reviews, 22 bookings, and 6 destinations. All apartment images are sourced from Unsplash.

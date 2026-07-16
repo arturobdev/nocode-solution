@@ -7,6 +7,7 @@ import { useStore } from '@/store/useStore'
 import { generateBookingNumber } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import BookingDetailsCard from '@/components/apartment/BookingDetailsCard'
+import SEO from '@/components/seo/SEO'
 import { BookingConfirmationSkeleton } from '@/components/skeletons/BookingConfirmationSkeleton'
 
 export default function BookingConfirmationPage() {
@@ -35,6 +36,7 @@ export default function BookingConfirmationPage() {
   if (!booking) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+        <SEO title="Booking Not Found" noindex />
         <p className="text-xl text-neutral-600">{t('bookingConfirmation.noBooking')}</p>
         <Button asChild variant="outline">
           <Link to="/">
@@ -50,6 +52,7 @@ export default function BookingConfirmationPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
+      <SEO title="Booking Confirmed" noindex />
       <div className="flex flex-col items-center text-center">
         <CircleCheckBig className="text-success mb-6" size={80} strokeWidth={1.5} />
         <h1 className="text-3xl font-bold text-primary">{t('bookingConfirmation.title')}</h1>

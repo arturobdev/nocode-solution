@@ -18,6 +18,7 @@ import CancellationPolicy from '@/components/apartment/CancellationPolicy'
 import HouseRules from '@/components/apartment/HouseRules'
 import SafetySection from '@/components/apartment/SafetySection'
 import MobileBookingBar from '@/components/apartment/MobileBookingBar'
+import SEO from '@/components/seo/SEO'
 import { ApartmentDetailsSkeleton } from '@/components/skeletons/ApartmentDetailsSkeleton'
 import type { GuestInfo } from '@/types'
 
@@ -99,8 +100,72 @@ export default function ApartmentDetailsPage() {
       ? apartmentReviews.reduce((sum, r) => sum + r.rating, 0) / apartmentReviews.length
       : apartment.rating
 
+  const apartmentStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: apartment.name,
+    description: apartment.description,
+    image: apartment.images,
+    url: `https://www.stayfinder.com/apartment/${apartment.id}`,
+    brand: {
+      '@type': 'Organization',
+      name: 'StayFinder',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: apartment.price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: `https://www.stayfinder.com/apartment/${apartment.id}`,
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: apartment.rating,
+      reviewCount: apartment.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    amenityFeature: apartment.amenities.map((amenity) => ({
+      '@type': 'LocationFeatureSpecification',
+      name: amenity,
+      value: true,
+    })),
+  }
+
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.stayfinder.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Search',
+        item: 'https://www.stayfinder.com/search',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: apartment.name,
+        item: `https://www.stayfinder.com/apartment/${apartment.id}`,
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50">
+      <SEO
+        title={apartment.name}
+        description={apartment.description.slice(0, 160)}
+        canonicalPath={`/apartment/${apartment.id}`}
+        ogImage={apartment.image}
+        structuredData={[apartmentStructuredData, breadcrumbStructuredData]}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
         <div className="mb-4 md:mb-6">
           <Link

@@ -13,6 +13,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import FilterControls from '@/components/search/FilterControls'
 import ApartmentCard from '@/components/search/ApartmentCard'
+import SEO from '@/components/seo/SEO'
 import { useSearchResults } from '@/hooks/useSearchResults'
 import { SearchSkeleton } from '@/components/skeletons/SearchSkeleton'
 import type { SortOption } from '@/hooks/useSearchResults'
@@ -59,6 +60,11 @@ export default function SearchResultsPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50">
+      <SEO
+        title="Search Vacation Rentals"
+        description="Search and filter from dozens of unique apartments, villas, cabins, and lofts. Find your perfect stay by price, rating, and amenities."
+        canonicalPath="/search"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="hidden lg:block w-72 shrink-0">

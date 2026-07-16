@@ -6,6 +6,7 @@ import { formatPrice } from '@/lib/utils'
 import StatsCards from '@/components/admin/StatsCards'
 import RevenueChart from '@/components/admin/RevenueChart'
 import BookingsTable from '@/components/admin/BookingsTable'
+import SEO from '@/components/seo/SEO'
 import { CalendarCheck, TrendingUp, DollarSign, BarChart3 } from 'lucide-react'
 
 export default function AdminDashboardPage() {
@@ -56,6 +57,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <SEO title="Admin Dashboard" noindex />
       <div>
         <h1 className="text-3xl font-bold text-primary">{t('admin.title')}</h1>
         <p className="text-neutral-600 mt-1">{t('admin.subtitle')}</p>

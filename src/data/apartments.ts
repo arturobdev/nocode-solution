@@ -197,9 +197,9 @@ export const apartments: Apartment[] = [
     location: 'Park Slope, Brooklyn',
     city: 'New York',
     country: 'USA',
-    image: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&h=600&fit=crop',
     images: [
-      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=1200&h=800&fit=crop',
@@ -419,9 +419,9 @@ export const apartments: Apartment[] = [
     location: 'Cannon Beach, Oregon',
     city: 'Cannon Beach',
     country: 'USA',
-    image: 'https://images.unsplash.com/photo-1499793983394-12dec4e2e3b9?w=800&h=600&fit=crop',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
     images: [
-      'https://images.unsplash.com/photo-1499793983394-12dec4e2e3b9?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&h=800&fit=crop',
       'https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=1200&h=800&fit=crop',

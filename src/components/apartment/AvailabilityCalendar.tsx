@@ -187,7 +187,7 @@ export default function AvailabilityCalendar({
             )}
           </div>
           <Button variant="ghost" size="sm" onClick={handleClearSelection} className="text-xs h-7">
-            Clear
+            {t('apartmentDetails.clear')}
           </Button>
         </div>
       )}

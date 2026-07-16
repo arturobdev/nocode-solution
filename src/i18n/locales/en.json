@@ -99,7 +99,7 @@
     "showResults": "Show results",
     "active": "Active"
   },
-  "apartmentDetails": {
+    "apartmentDetails": {
     "aboutThisPlace": "About this place",
     "aboutHost": "About your host",
     "whatThisPlaceOffers": "What this place offers",
@@ -112,7 +112,8 @@
     "available": "Available",
     "datesSelected": "dates selected",
     "checkIn": "Check-in",
-    "checkOut": "Check-out"
+    "checkOut": "Check-out",
+    "clear": "Clear"
   },
   "bookingSidebar": {
     "checkIn": "Check-in",
@@ -208,7 +209,22 @@
     "totalBookings": "Total Bookings",
     "activeBookings": "Active Bookings",
     "revenue": "Revenue",
-    "occupancyRate": "Occupancy Rate"
+    "occupancyRate": "Occupancy Rate",
+    "recentBookings": "Recent Bookings",
+    "revenueOverview": "Revenue Overview",
+    "searchPlaceholder": "Search by guest or apartment...",
+    "bookingNumber": "Booking #",
+    "apartment": "Apartment",
+    "guest": "Guest",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "total": "Total",
+    "status": "Status",
+    "noBookings": "No bookings found.",
+    "pageXofY": "Page {{current}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next"
   },
   "footer": {
     "tagline": "Discover and book the perfect stay for your next adventure. Comfort, quality, and unforgettable experiences await.",

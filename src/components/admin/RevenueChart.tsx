@@ -7,6 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
+import { useTranslation } from 'react-i18next'
 import { formatPrice } from '@/lib/utils'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -15,10 +16,12 @@ interface RevenueChartProps {
 }
 
 export default function RevenueChart({ data }: RevenueChartProps) {
+  const { t } = useTranslation()
+
   return (
     <Card className="shadow-sm rounded-xl border border-neutral-200">
       <CardHeader>
-        <CardTitle className="text-lg">Revenue Overview</CardTitle>
+        <CardTitle className="text-lg">{t('admin.revenueOverview')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-80">

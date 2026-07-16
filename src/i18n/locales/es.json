@@ -99,10 +99,10 @@
     "showResults": "Mostrar resultados",
     "active": "Activo"
   },
-  "apartmentDetails": {
+    "apartmentDetails": {
     "aboutThisPlace": "Sobre este lugar",
     "aboutHost": "Sobre tu anfitrión",
-    "whatThisPlaceOffers": "Lo que este lugar ofrece",
+    "whatThisPlaceOffers": "Qué ofrece este lugar",
     "availability": "Disponibilidad",
     "reviews": "Reseñas",
     "basedOn": "Basado en",
@@ -112,7 +112,8 @@
     "available": "Disponible",
     "datesSelected": "fechas seleccionadas",
     "checkIn": "Entrada",
-    "checkOut": "Salida"
+    "checkOut": "Salida",
+    "clear": "Limpiar"
   },
   "bookingSidebar": {
     "checkIn": "Entrada",
@@ -208,7 +209,22 @@
     "totalBookings": "Reservas Totales",
     "activeBookings": "Reservas Activas",
     "revenue": "Ingresos",
-    "occupancyRate": "Tasa de Ocupación"
+    "occupancyRate": "Tasa de Ocupación",
+    "recentBookings": "Reservas Recientes",
+    "revenueOverview": "Resumen de Ingresos",
+    "searchPlaceholder": "Buscar por huésped o apartamento...",
+    "bookingNumber": "Reserva #",
+    "apartment": "Apartamento",
+    "guest": "Huésped",
+    "checkIn": "Entrada",
+    "checkOut": "Salida",
+    "guests": "Huéspedes",
+    "total": "Total",
+    "status": "Estado",
+    "noBookings": "No se encontraron reservas.",
+    "pageXofY": "Página {{current}} de {{total}}",
+    "previous": "Anterior",
+    "next": "Siguiente"
   },
   "footer": {
     "tagline": "Descubre y reserva la estadía perfecta para tu próxima aventura. Comodidad, calidad y experiencias inolvidables te esperan.",

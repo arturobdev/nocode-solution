@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Search, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn, formatPrice } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -29,6 +30,7 @@ interface BookingsTableProps {
 }
 
 export default function BookingsTable({ bookings }: BookingsTableProps) {
+  const { t } = useTranslation()
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState<BookingStatus | 'all'>('all')
   const [currentPage, setCurrentPage] = useState(1)
@@ -61,12 +63,12 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
   return (
     <Card className="shadow-sm rounded-xl border border-neutral-200">
       <CardHeader className="space-y-4">
-        <CardTitle className="text-lg">Recent Bookings</CardTitle>
+        <CardTitle className="text-lg">{t('admin.recentBookings')}</CardTitle>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
             <Input
-              placeholder="Search by guest or apartment..."
+              placeholder={t('admin.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
               className="pl-9"
@@ -98,28 +100,28 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
             <thead>
               <tr className="border-b border-neutral-200">
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
-                  Booking #
+                  {t('admin.bookingNumber')}
                 </th>
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
-                  Apartment
+                  {t('admin.apartment')}
                 </th>
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
-                  Guest
+                  {t('admin.guest')}
                 </th>
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
-                  Check-in
+                  {t('admin.checkIn')}
                 </th>
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
-                  Check-out
+                  {t('admin.checkOut')}
                 </th>
                 <th scope="col" className="text-center py-3 px-4 font-medium text-neutral-600">
-                  Guests
+                  {t('admin.guests')}
                 </th>
                 <th scope="col" className="text-right py-3 px-4 font-medium text-neutral-600">
-                  Total
+                  {t('admin.total')}
                 </th>
                 <th scope="col" className="text-center py-3 px-4 font-medium text-neutral-600">
-                  Status
+                  {t('admin.status')}
                 </th>
               </tr>
             </thead>
@@ -150,7 +152,7 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
             </tbody>
           </table>
           {paginatedBookings.length === 0 && (
-            <p className="text-center text-neutral-600 py-8">No bookings found.</p>
+            <p className="text-center text-neutral-600 py-8">{t('admin.noBookings')}</p>
           )}
         </div>
 
@@ -169,20 +171,22 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                 <span>
                   {booking.checkIn} - {booking.checkOut}
                 </span>
-                <span>{booking.guests} guests</span>
+                <span>
+                  {booking.guests} {t('admin.guests').toLowerCase()}
+                </span>
               </div>
               <p className="text-sm font-medium text-primary">{formatPrice(booking.total)}</p>
             </div>
           ))}
           {paginatedBookings.length === 0 && (
-            <p className="text-center text-neutral-600 py-8">No bookings found.</p>
+            <p className="text-center text-neutral-600 py-8">{t('admin.noBookings')}</p>
           )}
         </div>
 
         {filteredBookings.length > ROWS_PER_PAGE && (
           <div className="flex items-center justify-between mt-6 pt-4 border-t border-neutral-200">
             <p className="text-sm text-neutral-600">
-              Page {currentPage} of {totalPages}
+              {t('admin.pageXofY', { current: currentPage, total: totalPages })}
             </p>
             <div className="flex gap-2">
               <Button
@@ -192,7 +196,7 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                 onClick={() => setCurrentPage((p) => p - 1)}
               >
                 <ChevronLeft className="h-4 w-4" />
-                Previous
+                {t('admin.previous')}
               </Button>
               <Button
                 variant="outline"
@@ -200,7 +204,7 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((p) => p + 1)}
               >
-                Next
+                {t('admin.next')}
                 <ChevronRight className="h-4 w-4" />
               </Button>
             </div>

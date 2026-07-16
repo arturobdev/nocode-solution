@@ -224,7 +224,12 @@
     "noBookings": "Nenhuma reserva encontrada.",
     "pageXofY": "Página {{current}} de {{total}}",
     "previous": "Anterior",
-    "next": "Próximo"
+    "next": "Próximo",
+    "statusAll": "Todos",
+    "statusConfirmed": "Confirmada",
+    "statusPending": "Pendente",
+    "statusCancelled": "Cancelada",
+    "statusCompleted": "Concluída"
   },
   "footer": {
     "tagline": "Descubra e reserve a estadia perfeita para sua próxima aventura. Conforto, qualidade e experiências inesquecíveis aguardam por você.",

@@ -18,6 +18,14 @@ const statusFilters: (BookingStatus | 'all')[] = [
   'completed',
 ]
 
+const STATUS_I18N_KEY: Record<BookingStatus | 'all', string> = {
+  all: 'admin.statusAll',
+  confirmed: 'admin.statusConfirmed',
+  pending: 'admin.statusPending',
+  cancelled: 'admin.statusCancelled',
+  completed: 'admin.statusCompleted',
+}
+
 const statusBadgeVariant: Record<BookingStatus, 'success' | 'warning' | 'destructive' | 'info'> = {
   confirmed: 'success',
   pending: 'warning',
@@ -88,7 +96,7 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                   : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
               )}
             >
-              {filter}
+              {t(STATUS_I18N_KEY[filter])}
             </button>
           ))}
         </div>
@@ -96,7 +104,7 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
       <CardContent>
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm">
-            <caption className="sr-only">Recent bookings</caption>
+            <caption className="sr-only">{t('admin.recentBookings')}</caption>
             <thead>
               <tr className="border-b border-neutral-200">
                 <th scope="col" className="text-left py-3 px-4 font-medium text-neutral-600">
@@ -143,8 +151,8 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
                     {formatPrice(booking.total)}
                   </td>
                   <td className="py-3 px-4 text-center">
-                    <Badge variant={statusBadgeVariant[booking.status]} className="capitalize">
-                      {booking.status}
+                    <Badge variant={statusBadgeVariant[booking.status]}>
+                      {t(STATUS_I18N_KEY[booking.status])}
                     </Badge>
                   </td>
                 </tr>
@@ -161,8 +169,8 @@ export default function BookingsTable({ bookings }: BookingsTableProps) {
             <div key={booking.id} className="border border-neutral-200 rounded-lg p-4 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-primary text-sm">{booking.bookingNumber}</span>
-                <Badge variant={statusBadgeVariant[booking.status]} className="capitalize">
-                  {booking.status}
+                <Badge variant={statusBadgeVariant[booking.status]}>
+                  {t(STATUS_I18N_KEY[booking.status])}
                 </Badge>
               </div>
               <p className="text-sm text-neutral-600 truncate">{booking.apartmentName}</p>

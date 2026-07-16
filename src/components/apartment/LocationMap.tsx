@@ -1,4 +1,5 @@
-import { MapPin } from 'lucide-react'
+import { useState } from 'react'
+import { MapPin, Maximize2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 const CITY_COORDS: Record<string, { lat: number; lng: number; landmarks: string[] }> = {
@@ -66,21 +67,25 @@ interface LocationMapProps {
 
 export default function LocationMap({ city, country }: LocationMapProps) {
   const { t } = useTranslation()
+  const [expanded, setExpanded] = useState(false)
   const coords = CITY_COORDS[city] || { lat: 39.8283, lng: -98.5795, landmarks: [] }
   const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${coords.lng - 0.02}%2C${coords.lat - 0.015}%2C${coords.lng + 0.02}%2C${coords.lat + 0.015}&layer=mapnik&marker=${coords.lat}%2C${coords.lng}`
+  const fullMapUrl = `https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lng}#map=15/${coords.lat}/${coords.lng}`
 
   return (
-    <section aria-labelledby="location-heading" className="mb-8">
+    <section aria-labelledby="location-heading" className="mb-6 md:mb-8">
       <h2
         id="location-heading"
-        className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"
+        className="text-lg md:text-xl font-semibold text-primary mb-3 md:mb-4 flex items-center gap-2"
       >
         <MapPin className="h-5 w-5" />
         {t('location.title')}
       </h2>
 
       <div className="rounded-xl overflow-hidden border border-neutral-200">
-        <div className="relative aspect-video w-full">
+        <div
+          className={`relative w-full transition-all duration-300 ${expanded ? 'aspect-video' : 'aspect-[2/1] md:aspect-[3/1]'}`}
+        >
           <iframe
             title={`${city}, ${country} location map`}
             src={mapUrl}
@@ -91,26 +96,49 @@ export default function LocationMap({ city, country }: LocationMapProps) {
         </div>
       </div>
 
-      <p className="text-xs text-neutral-500 mt-2 flex items-center gap-1">
-        <MapPin className="h-3 w-3" />
-        {t('location.approximate')}
-      </p>
+      <div className="flex items-center justify-between mt-2">
+        <p className="text-xs text-neutral-500 flex items-center gap-1">
+          <MapPin className="h-3 w-3" />
+          {t('location.approximate')}
+        </p>
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-dark transition-colors"
+        >
+          <Maximize2 className="h-3 w-3" />
+          {expanded ? t('common.showLess') : t('common.viewLargerMap')}
+        </button>
+      </div>
 
       {coords.landmarks.length > 0 && (
-        <div className="mt-4">
-          <h3 className="text-sm font-medium text-primary mb-2">{t('location.nearbyLandmarks')}</h3>
-          <ul className="flex flex-wrap gap-2" role="list">
+        <div className="mt-3">
+          <h3 className="text-xs md:text-sm font-medium text-primary mb-2">
+            {t('location.nearbyLandmarks')}
+          </h3>
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
             {coords.landmarks.map((landmark) => (
-              <li
+              <span
                 key={landmark}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-50 border border-neutral-200 text-xs text-neutral-600"
+                className="inline-flex items-center gap-1 md:gap-1.5 px-2 md:px-3 py-1 md:py-1.5 rounded-full bg-neutral-50 border border-neutral-200 text-xs text-neutral-600"
               >
                 <MapPin className="h-3 w-3 text-primary" />
                 {landmark}
-              </li>
+              </span>
             ))}
-          </ul>
+          </div>
         </div>
+      )}
+
+      {expanded && (
+        <a
+          href={fullMapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+        >
+          <Maximize2 className="h-4 w-4" />
+          {t('common.openInMap')}
+        </a>
       )}
     </section>
   )

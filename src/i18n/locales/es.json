@@ -27,7 +27,14 @@
     "resultsPlural": "resultados",
     "notFound": "Apartamento no encontrado",
     "notFoundDesc": "El apartamento que buscas no existe o ha sido eliminado.",
-    "backToSearchBtn": "Volver a la Búsqueda"
+    "backToSearchBtn": "Volver a la Búsqueda",
+    "showMore": "Ver más",
+    "showLess": "Ver menos",
+    "viewAllAmenities": "Ver las {{count}} comodidades",
+    "viewAllReviews": "Ver las {{count}} reseñas",
+    "learnMore": "Más información",
+    "viewLargerMap": "Ver mapa más grande",
+    "openInMap": "Abrir en Mapas"
   },
   "nav": {
     "home": "Inicio",
@@ -140,6 +147,7 @@
   "cancellation": {
     "title": "Política de Cancelación",
     "freeCancellation": "Cancelación Gratuita",
+    "freeCancellationShort": "Cancela hasta 48 horas antes del check-in para un reembolso completo.",
     "freeCancellationDesc": "Cancela hasta 48 horas antes del check-in para un reembolso completo. Sin preguntas.",
     "partialRefund": "Reembolso Parcial",
     "partialRefundDesc": "Cancela entre 24-48 horas antes del check-in y recibe un reembolso del 50%.",

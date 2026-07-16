@@ -17,6 +17,7 @@ import LocationMap from '@/components/apartment/LocationMap'
 import CancellationPolicy from '@/components/apartment/CancellationPolicy'
 import HouseRules from '@/components/apartment/HouseRules'
 import SafetySection from '@/components/apartment/SafetySection'
+import MobileBookingBar from '@/components/apartment/MobileBookingBar'
 import { ApartmentDetailsSkeleton } from '@/components/skeletons/ApartmentDetailsSkeleton'
 import type { GuestInfo } from '@/types'
 
@@ -31,6 +32,7 @@ export default function ApartmentDetailsPage() {
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
+  const [descExpanded, setDescExpanded] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 700)
@@ -99,8 +101,8 @@ export default function ApartmentDetailsPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+        <div className="mb-4 md:mb-6">
           <Link
             to="/search"
             className="inline-flex items-center text-sm text-neutral-600 hover:text-primary transition-colors"
@@ -112,10 +114,10 @@ export default function ApartmentDetailsPage() {
 
         <ImageGallery images={apartment.images} name={apartment.name} />
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <div className="flex-1 min-w-0">
-            <h1 className="text-3xl font-bold text-primary mb-2">{apartment.name}</h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-600 mb-4">
+            <h1 className="text-2xl md:text-3xl font-bold text-primary mb-2">{apartment.name}</h1>
+            <div className="flex flex-wrap items-center gap-3 md:gap-4 text-sm text-neutral-600 mb-3 md:mb-4">
               <span className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" />
                 {apartment.location}
@@ -127,38 +129,52 @@ export default function ApartmentDetailsPage() {
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-600 mb-6">
-              <span className="flex items-center gap-2">
-                <Bed className="h-5 w-5" />
+            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-sm text-neutral-600 mb-5 md:mb-6">
+              <span className="flex items-center gap-1.5 md:gap-2">
+                <Bed className="h-4 w-4 md:h-5 md:w-5" />
                 {apartment.bedrooms}{' '}
                 {apartment.bedrooms !== 1 ? t('common.bedrooms') : t('common.bedroom')}
               </span>
-              <span className="flex items-center gap-2">
-                <Bath className="h-5 w-5" />
+              <span className="flex items-center gap-1.5 md:gap-2">
+                <Bath className="h-4 w-4 md:h-5 md:w-5" />
                 {apartment.bathrooms}{' '}
                 {apartment.bathrooms !== 1 ? t('common.bathrooms') : t('common.bathroom')}
               </span>
-              <span className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
+              <span className="flex items-center gap-1.5 md:gap-2">
+                <Users className="h-4 w-4 md:h-5 md:w-5" />
                 {t('common.guests').charAt(0).toUpperCase() + t('common.guests').slice(1)}{' '}
                 {apartment.guests}
               </span>
             </div>
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
 
-            <div className="mb-8">
-              <h2 className="text-xl font-semibold text-primary mb-4">
+            <div className="mb-5 md:mb-8">
+              <h2 className="text-lg md:text-xl font-semibold text-primary mb-3 md:mb-4">
                 {t('apartmentDetails.aboutThisPlace')}
               </h2>
-              <p className="text-neutral-600 leading-relaxed">{apartment.description}</p>
+              <div className="relative">
+                <p
+                  className={`text-sm md:text-base text-neutral-600 leading-relaxed transition-all duration-300 ${
+                    !descExpanded ? 'line-clamp-4' : ''
+                  }`}
+                >
+                  {apartment.description}
+                </p>
+                <button
+                  onClick={() => setDescExpanded(!descExpanded)}
+                  className="mt-2 text-sm font-medium text-primary hover:text-primary-dark transition-colors underline underline-offset-2"
+                >
+                  {descExpanded ? t('common.showLess') : t('common.showMore')}
+                </button>
+              </div>
             </div>
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
 
             <AmenitiesSection amenities={apartment.amenities} />
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
 
             <AvailabilityCalendar
               apartmentId={apartment.id}
@@ -168,7 +184,11 @@ export default function ApartmentDetailsPage() {
               onCheckOutChange={setCheckOut}
             />
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
+
+            <ReviewsSection reviews={apartmentReviews} avgRating={avgRating} />
+
+            <Separator className="my-5 md:my-8" />
 
             <HostSection
               host={apartment.host}
@@ -176,25 +196,21 @@ export default function ApartmentDetailsPage() {
               reviewCount={apartmentReviews.length}
             />
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
 
             <LocationMap city={apartment.city} country={apartment.country} />
 
-            <Separator className="my-8" />
-
-            <CancellationPolicy />
-
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
 
             <HouseRules />
 
-            <Separator className="my-8" />
+            <Separator className="my-5 md:my-8" />
+
+            <CancellationPolicy />
+
+            <Separator className="my-5 md:my-8" />
 
             <SafetySection />
-
-            <Separator className="my-8" />
-
-            <ReviewsSection reviews={apartmentReviews} avgRating={avgRating} />
           </div>
 
           <BookingSidebar
@@ -215,6 +231,21 @@ export default function ApartmentDetailsPage() {
           />
         </div>
       </div>
+
+      <MobileBookingBar
+        price={apartment.price}
+        rating={avgRating}
+        reviewCount={apartmentReviews.length}
+        canReserve={canReserve}
+        onReserve={() => {
+          const el = document.querySelector('[data-booking-sidebar]')
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+          }
+        }}
+      />
+
+      <div className="h-20 lg:hidden" />
     </div>
   )
 }

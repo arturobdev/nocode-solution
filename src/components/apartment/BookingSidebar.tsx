@@ -98,7 +98,7 @@ export default function BookingSidebar({
   }
 
   return (
-    <div className="w-full lg:w-96 shrink-0">
+    <div className="w-full lg:w-96 shrink-0" data-booking-sidebar>
       <div className="sticky top-24">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">

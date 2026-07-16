@@ -1,5 +1,11 @@
 import { LogIn, LogOut, Cigarette, PartyPopper, PawPrint, Moon, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 export default function HouseRules() {
   const { t } = useTranslation()
@@ -43,29 +49,35 @@ export default function HouseRules() {
   ]
 
   return (
-    <section aria-labelledby="house-rules-heading" className="mb-8">
-      <h2 id="house-rules-heading" className="text-xl font-semibold text-primary mb-4">
+    <section aria-labelledby="house-rules-heading" className="mb-6 md:mb-8">
+      <h2
+        id="house-rules-heading"
+        className="text-lg md:text-xl font-semibold text-primary mb-3 md:mb-4"
+      >
         {t('houseRules.title')}
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {rules.map((rule) => {
-          const Icon = rule.icon
-          return (
-            <div
-              key={rule.title}
-              className="flex items-start gap-3 p-4 rounded-xl border border-neutral-200 bg-white"
-            >
-              <div className="size-9 rounded-lg bg-neutral-50 flex items-center justify-center shrink-0">
-                <Icon className="h-4.5 w-4.5 text-primary" />
-              </div>
-              <div>
-                <h3 className="text-sm font-medium text-primary">{rule.title}</h3>
-                <p className="text-xs text-neutral-600 mt-0.5">{rule.description}</p>
-              </div>
-            </div>
-          )
-        })}
+      <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden">
+        <Accordion type="single" collapsible defaultValue="item-0">
+          {rules.map((rule, index) => {
+            const Icon = rule.icon
+            return (
+              <AccordionItem key={rule.title} value={`item-${index}`} className="px-4">
+                <AccordionTrigger className="py-3">
+                  <div className="flex items-center gap-3">
+                    <div className="size-8 rounded-lg bg-neutral-50 flex items-center justify-center shrink-0">
+                      <Icon className="h-4 w-4 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-primary">{rule.title}</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-sm text-neutral-600 pl-11">{rule.description}</p>
+                </AccordionContent>
+              </AccordionItem>
+            )
+          })}
+        </Accordion>
       </div>
     </section>
   )

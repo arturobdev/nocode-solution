@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Star, MapPin, Users, Bed, Bath, Search, ChevronLeft } from 'lucide-react'
 import { calculateNights } from '@/lib/utils'
@@ -10,6 +10,9 @@ import ImageGallery from '@/components/apartment/ImageGallery'
 import BookingSidebar from '@/components/apartment/BookingSidebar'
 import ReviewsSection from '@/components/apartment/ReviewsSection'
 import AmenitiesSection from '@/components/apartment/AmenitiesSection'
+import AvailabilitySection from '@/components/apartment/AvailabilitySection'
+import { ApartmentDetailsSkeleton } from '@/components/skeletons/ApartmentDetailsSkeleton'
+import type { GuestInfo } from '@/types'
 
 export default function ApartmentDetailsPage() {
   const { id } = useParams<{ id: string }>()
@@ -17,9 +20,15 @@ export default function ApartmentDetailsPage() {
   const apartment = apartments.find((a) => a.id === id)
   const apartmentReviews = useMemo(() => (id ? getReviewsByApartmentId(id) : []), [id])
 
+  const [loading, setLoading] = useState(true)
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 700)
+    return () => clearTimeout(timer)
+  }, [id])
 
   const nights = useMemo(() => {
     if (!checkIn || !checkOut) return 0
@@ -34,7 +43,9 @@ export default function ApartmentDetailsPage() {
 
   const canReserve = checkIn !== '' && checkOut !== '' && nights > 0 && guests >= 1
 
-  const handleReserve = () => {
+  if (loading) return <ApartmentDetailsSkeleton />
+
+  const handleReserve = (guestInfo: GuestInfo) => {
     if (!apartment || !canReserve) return
     const bookingData = {
       id: crypto.randomUUID(),
@@ -42,9 +53,9 @@ export default function ApartmentDetailsPage() {
       apartmentId: apartment.id,
       apartmentName: apartment.name,
       apartmentImage: apartment.image,
-      guestName: 'Guest',
-      guestEmail: 'guest@stayfinder.com',
-      guestPhone: '+1 555-000-0000',
+      guestName: guestInfo.fullName,
+      guestEmail: guestInfo.email,
+      guestPhone: guestInfo.phone,
       checkIn,
       checkOut,
       guests,
@@ -136,6 +147,10 @@ export default function ApartmentDetailsPage() {
             <Separator className="my-8" />
 
             <AmenitiesSection amenities={apartment.amenities} />
+
+            <Separator className="my-8" />
+
+            <AvailabilitySection apartmentId={apartment.id} checkIn={checkIn} checkOut={checkOut} />
 
             <Separator className="my-8" />
 

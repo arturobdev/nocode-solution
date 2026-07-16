@@ -55,6 +55,9 @@ export default function ApartmentCard({ apartment, isLiked, onToggleLike }: Apar
             <span className="text-sm font-medium text-primary">{apartment.rating}</span>
             <span className="text-sm text-neutral-600">({apartment.reviewCount} reviews)</span>
           </div>
+          <p className="text-sm text-neutral-600 leading-relaxed mb-3 line-clamp-2">
+            {apartment.description}
+          </p>
           <div className="flex items-center gap-4 text-sm text-neutral-600 mb-4">
             <span className="flex items-center gap-1">
               <Bed className="h-4 w-4" />

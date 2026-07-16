@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Mail, Phone, MapPin } from 'lucide-react'
 import logo from '@/assets/logo.svg'
 
 const exploreLinks = [
@@ -76,27 +77,44 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
-              Legal
+              Contact
             </h3>
-            <nav aria-label="Legal">
-              <ul className="space-y-2.5">
-                {legalLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-neutral-400 transition-colors hover:text-accent"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <address className="not-italic space-y-3">
+              <a
+                href="mailto:hello@stayfinder.com"
+                className="flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-accent"
+              >
+                <Mail className="h-4 w-4 shrink-0" />
+                hello@stayfinder.com
+              </a>
+              <a
+                href="tel:+18005551234"
+                className="flex items-center gap-2 text-sm text-neutral-400 transition-colors hover:text-accent"
+              >
+                <Phone className="h-4 w-4 shrink-0" />
+                +1 (800) 555-1234
+              </a>
+              <p className="flex items-start gap-2 text-sm text-neutral-400">
+                <MapPin className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>123 Travel Plaza, Suite 400<br />San Francisco, CA 94102</span>
+              </p>
+            </address>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-neutral-500">
-          &copy; 2026 StayFinder. All rights reserved.
+        <div className="mt-12 border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-neutral-500">
+          <p>&copy; 2026 StayFinder. All rights reserved.</p>
+          <nav aria-label="Legal" className="flex gap-4">
+            {legalLinks.map((link) => (
+              <Link
+                key={link.label}
+                to={link.to}
+                className="hover:text-neutral-300 transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>

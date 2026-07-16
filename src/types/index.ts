@@ -81,3 +81,16 @@ export interface SearchParams {
   checkOut: string
   guests: number
 }
+
+export interface GuestInfo {
+  fullName: string
+  email: string
+  phone: string
+}
+
+export interface BookingFormData {
+  checkIn: string
+  checkOut: string
+  guests: number
+  guestInfo: GuestInfo
+}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CircleCheckBig, Home, LayoutDashboard } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { Booking } from '@/types'
 import { useStore } from '@/store/useStore'
 import { generateBookingNumber } from '@/lib/utils'
@@ -9,6 +10,7 @@ import BookingDetailsCard from '@/components/apartment/BookingDetailsCard'
 import { BookingConfirmationSkeleton } from '@/components/skeletons/BookingConfirmationSkeleton'
 
 export default function BookingConfirmationPage() {
+  const { t } = useTranslation()
   const location = useLocation()
   const booking = location.state?.booking as Booking | undefined
   const { addBooking } = useStore()
@@ -33,11 +35,11 @@ export default function BookingConfirmationPage() {
   if (!booking) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <p className="text-xl text-neutral-600">No booking found</p>
+        <p className="text-xl text-neutral-600">{t('bookingConfirmation.noBooking')}</p>
         <Button asChild variant="outline">
           <Link to="/">
             <Home className="h-4 w-4" />
-            Return Home
+            {t('bookingConfirmation.returnHome')}
           </Link>
         </Button>
       </div>
@@ -50,8 +52,8 @@ export default function BookingConfirmationPage() {
     <div className="max-w-2xl mx-auto px-4 py-12">
       <div className="flex flex-col items-center text-center">
         <CircleCheckBig className="text-success mb-6" size={80} strokeWidth={1.5} />
-        <h1 className="text-3xl font-bold text-primary">Booking Confirmed!</h1>
-        <p className="text-neutral-600 mt-2">Your reservation has been successfully submitted</p>
+        <h1 className="text-3xl font-bold text-primary">{t('bookingConfirmation.title')}</h1>
+        <p className="text-neutral-600 mt-2">{t('bookingConfirmation.subtitle')}</p>
       </div>
 
       <BookingDetailsCard booking={{ ...booking, bookingNumber }} />
@@ -60,13 +62,13 @@ export default function BookingConfirmationPage() {
         <Button asChild variant="outline" className="w-full sm:w-auto">
           <Link to="/">
             <Home className="h-4 w-4" />
-            Return Home
+            {t('bookingConfirmation.returnHome')}
           </Link>
         </Button>
         <Button asChild className="w-full sm:w-auto">
           <Link to="/admin">
             <LayoutDashboard className="h-4 w-4" />
-            View Booking in Admin
+            {t('bookingConfirmation.viewInAdmin')}
           </Link>
         </Button>
       </div>

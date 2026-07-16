@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { destinations } from '@/data/destinations'
 import type { Destination } from '@/types'
 
@@ -7,6 +8,8 @@ interface DestinationCardProps {
 }
 
 function DestinationCard({ destination }: DestinationCardProps) {
+  const { t } = useTranslation()
+
   return (
     <li>
       <article className="group relative block rounded-xl overflow-hidden aspect-4/3 transition-transform duration-300 hover:scale-[1.02]">
@@ -22,7 +25,7 @@ function DestinationCard({ destination }: DestinationCardProps) {
           <h3 className="text-2xl font-bold text-white mb-1">{destination.name}</h3>
           <p className="text-white/80 text-sm mb-2">{destination.country}</p>
           <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
-            {destination.apartmentCount} apartments
+            {destination.apartmentCount} {t('destinations.apartments')}
           </span>
         </div>
         <Link
@@ -36,14 +39,16 @@ function DestinationCard({ destination }: DestinationCardProps) {
 }
 
 export default function FeaturedDestinations() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-16 lg:py-20 bg-white">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">Popular Destinations</h2>
-          <p className="text-neutral-600 text-lg max-w-xl mx-auto">
-            Explore our most sought-after locations for your next getaway
-          </p>
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">
+            {t('destinations.title')}
+          </h2>
+          <p className="text-neutral-600 text-lg max-w-xl mx-auto">{t('destinations.subtitle')}</p>
         </div>
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

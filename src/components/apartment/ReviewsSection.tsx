@@ -1,5 +1,6 @@
 import { Star } from 'lucide-react'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 import { getInitials } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -12,10 +13,12 @@ interface ReviewsSectionProps {
 }
 
 export default function ReviewsSection({ reviews, avgRating }: ReviewsSectionProps) {
+  const { t } = useTranslation()
+
   return (
     <div className="mb-8">
       <div className="flex items-center gap-3 mb-6">
-        <h2 className="text-xl font-semibold text-primary">Reviews</h2>
+        <h2 className="text-xl font-semibold text-primary">{t('apartmentDetails.reviews')}</h2>
         <Badge variant="secondary">
           <Star className="h-3 w-3 fill-warning text-warning mr-1" />
           {avgRating.toFixed(1)}
@@ -27,14 +30,14 @@ export default function ReviewsSection({ reviews, avgRating }: ReviewsSectionPro
         <div>
           <StarRating rating={avgRating} size="lg" className="mb-1" />
           <span className="text-sm text-neutral-600">
-            Based on {reviews.length} review
+            {t('apartmentDetails.basedOn')} {reviews.length} {t('common.review')}
             {reviews.length !== 1 ? 's' : ''}
           </span>
         </div>
       </div>
 
       {reviews.length === 0 ? (
-        <p className="text-neutral-600 text-center py-8">No reviews yet for this apartment.</p>
+        <p className="text-neutral-600 text-center py-8">{t('apartmentDetails.noReviews')}</p>
       ) : (
         <div className="space-y-6">
           {reviews.map((review) => (
@@ -49,7 +52,7 @@ export default function ReviewsSection({ reviews, avgRating }: ReviewsSectionPro
                   <div className="flex items-center justify-between">
                     <h4 className="font-medium text-primary">{review.guestName}</h4>
                     <span className="text-xs text-neutral-600">
-                      {format(new Date(review.date), 'MMM d, yyyy')}
+                      {format(parseISO(review.date), 'MMM d, yyyy')}
                     </span>
                   </div>
                   <StarRating rating={review.rating} size="sm" className="mt-1" />

@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { MapPin, Star, Users, Heart } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { featuredApartments } from '@/data/apartments'
 import { formatPrice, cn } from '@/lib/utils'
 import type { Apartment } from '@/types'
 
 function ApartmentCard({ apartment }: { apartment: Apartment }) {
+  const { t } = useTranslation()
+
   return (
     <li>
       <article className="bg-white rounded-lg shadow-md overflow-hidden transition-shadow duration-300 hover:shadow-lg flex flex-col h-full">
@@ -32,18 +35,23 @@ function ApartmentCard({ apartment }: { apartment: Apartment }) {
           <div className="flex items-center gap-1.5 mb-3">
             <Star className="size-4 fill-accent text-accent" />
             <span className="text-sm font-medium">{apartment.rating}</span>
-            <span className="text-sm text-neutral-600">({apartment.reviewCount} reviews)</span>
+            <span className="text-sm text-neutral-600">
+              ({apartment.reviewCount} {t('common.reviews')})
+            </span>
           </div>
 
           <div className="flex items-center gap-1.5 text-sm text-neutral-600 mb-4">
             <Users className="size-3.5" />
-            <span>Up to {apartment.guests} guests</span>
+            <span>
+              {t('common.guests').charAt(0).toUpperCase() + t('common.guests').slice(1)}{' '}
+              {apartment.guests}
+            </span>
           </div>
 
           <div className="mt-auto">
             <p className="mb-3">
               <span className="text-lg font-bold text-primary">{formatPrice(apartment.price)}</span>
-              <span className="text-sm text-neutral-600"> /night</span>
+              <span className="text-sm text-neutral-600"> {t('common.perNight')}</span>
             </p>
 
             <Link
@@ -54,7 +62,7 @@ function ApartmentCard({ apartment }: { apartment: Apartment }) {
                 'hover:bg-primary hover:text-white transition-colors'
               )}
             >
-              View Details
+              {t('common.viewDetails')}
             </Link>
           </div>
         </div>
@@ -64,19 +72,23 @@ function ApartmentCard({ apartment }: { apartment: Apartment }) {
 }
 
 export default function PopularApartments() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-16 lg:py-20 bg-neutral-50">
       <div className="container-custom">
         <div className="flex items-end justify-between mb-12">
           <div>
-            <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">Popular Apartments</h2>
-            <p className="text-neutral-600 text-lg">Handpicked stays loved by our guests</p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">
+              {t('popularApartments.title')}
+            </h2>
+            <p className="text-neutral-600 text-lg">{t('popularApartments.subtitle')}</p>
           </div>
           <Link
             to="/search"
             className="text-primary font-medium hover:text-primary-light transition-colors hidden sm:block"
           >
-            View All →
+            {t('common.viewAll')} →
           </Link>
         </div>
 
@@ -91,7 +103,7 @@ export default function PopularApartments() {
             to="/search"
             className="text-primary font-medium hover:text-primary-light transition-colors"
           >
-            View All →
+            {t('common.viewAll')} →
           </Link>
         </div>
       </div>

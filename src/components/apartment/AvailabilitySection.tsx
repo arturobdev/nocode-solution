@@ -1,6 +1,15 @@
 import { useMemo } from 'react'
 import { CalendarDays, CircleCheck, CircleX } from 'lucide-react'
-import { format, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns'
+import {
+  format,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameDay,
+  startOfDay,
+  parseISO,
+} from 'date-fns'
 
 interface AvailabilitySectionProps {
   apartmentId: string
@@ -10,7 +19,7 @@ interface AvailabilitySectionProps {
 
 function generateOccupiedDates(apartmentId: string): Date[] {
   const seed = parseInt(apartmentId) * 7
-  const today = new Date()
+  const today = startOfDay(new Date())
   const occupied: Date[] = []
 
   for (let i = 0; i < 8; i++) {
@@ -30,7 +39,7 @@ export default function AvailabilitySection({
   checkIn,
   checkOut,
 }: AvailabilitySectionProps) {
-  const today = useMemo(() => new Date(), [])
+  const today = useMemo(() => startOfDay(new Date()), [])
   const occupiedDates = useMemo(() => generateOccupiedDates(apartmentId), [apartmentId])
 
   const currentMonth = today
@@ -50,8 +59,8 @@ export default function AvailabilitySection({
   const isPast = (date: Date) => date < today && !isSameDay(date, today)
   const isSelected = (date: Date) => {
     if (!checkIn || !checkOut) return false
-    const ci = new Date(checkIn)
-    const co = new Date(checkOut)
+    const ci = parseISO(checkIn)
+    const co = parseISO(checkOut)
     return date >= ci && date <= co
   }
 
@@ -62,7 +71,7 @@ export default function AvailabilitySection({
 
     return (
       <div
-        key={date.toISOString()}
+        key={format(date, 'yyyy-MM-dd')}
         className={`flex items-center justify-center size-9 rounded-full text-sm transition-colors ${
           selected
             ? 'bg-primary text-secondary font-medium'
@@ -80,7 +89,10 @@ export default function AvailabilitySection({
 
   return (
     <section aria-labelledby="availability-heading">
-      <h2 id="availability-heading" className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+      <h2
+        id="availability-heading"
+        className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"
+      >
         <CalendarDays className="h-5 w-5" />
         Availability
       </h2>
@@ -105,9 +117,7 @@ export default function AvailabilitySection({
           </div>
         </div>
         <div>
-          <p className="text-sm font-medium text-primary mb-3">
-            {format(nextMonth, 'MMMM yyyy')}
-          </p>
+          <p className="text-sm font-medium text-primary mb-3">{format(nextMonth, 'MMMM yyyy')}</p>
           <div className="grid grid-cols-7 gap-1 mb-1">
             {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((d) => (
               <span key={d} className="text-xs text-neutral-500 text-center py-1">

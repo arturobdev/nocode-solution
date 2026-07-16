@@ -1,18 +1,33 @@
 import { useState, useId } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Globe } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import logo from '@/assets/logo.svg'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
-const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/search', label: 'Search' },
-  { to: '/admin', label: 'Admin' },
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
+  { code: 'pt', label: 'Português' },
 ]
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const menuId = useId()
+  const { t, i18n } = useTranslation()
+
+  const navLinks = [
+    { to: '/', label: t('nav.home') },
+    { to: '/search', label: t('nav.search') },
+    { to: '/admin', label: t('nav.admin') },
+  ]
 
   return (
     <nav className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
@@ -37,6 +52,27 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+        </div>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <div className="flex items-center gap-1.5">
+            <Globe className="h-4 w-4 text-neutral-600" />
+            <Select value={i18n.language} onValueChange={(lng) => i18n.changeLanguage(lng)}>
+              <SelectTrigger
+                className="w-auto h-8 text-xs border-0 bg-transparent focus:ring-0 focus:ring-offset-0 px-1"
+                aria-label={t('nav.language')}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {LANGUAGES.map((lang) => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    {lang.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <button
@@ -74,6 +110,24 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <div className="flex items-center gap-2 px-3 py-2">
+            <Globe className="h-4 w-4 text-neutral-600" />
+            <Select value={i18n.language} onValueChange={(lng) => i18n.changeLanguage(lng)}>
+              <SelectTrigger
+                className="w-auto h-8 text-xs border-0 bg-transparent focus:ring-0 focus:ring-offset-0 px-1"
+                aria-label={t('nav.language')}
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {LANGUAGES.map((lang) => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    {lang.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </nav>

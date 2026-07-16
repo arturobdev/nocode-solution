@@ -1,14 +1,16 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Users, Calendar, Shield, Mail, Phone, User } from 'lucide-react'
+import { Users, Calendar, Shield, Mail, Phone, User, AlertTriangle } from 'lucide-react'
 import { formatPrice, getInitials } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { generateOccupiedDates, isDateRangeOverlappingOccupied } from '@/lib/availabilityUtils'
+import { format, isSameDay, parseISO } from 'date-fns'
 import type { Apartment } from '@/types'
 
 const guestInfoSchema = z.object({
@@ -55,6 +57,7 @@ export default function BookingSidebar({
   const checkInId = useId()
   const checkOutId = useId()
   const guestsId = useId()
+  const [availabilityError, setAvailabilityError] = useState<string | null>(null)
 
   const {
     register,
@@ -64,7 +67,33 @@ export default function BookingSidebar({
     resolver: zodResolver(guestInfoSchema),
   })
 
+  const occupiedDates = generateOccupiedDates(apartment.id)
+
+  const isDateOccupied = (dateStr: string): boolean => {
+    const date = parseISO(dateStr)
+    return occupiedDates.some((d) => isSameDay(d, date))
+  }
+
+  const isRangeOverlapping = (start: string, end: string): boolean => {
+    const startDate = parseISO(start)
+    const endDate = parseISO(end)
+    return isDateRangeOverlappingOccupied(startDate, endDate, occupiedDates)
+  }
+
   const onSubmit = (data: GuestInfoValues) => {
+    if (checkIn && isDateOccupied(checkIn)) {
+      setAvailabilityError('Check-in date is not available')
+      return
+    }
+    if (checkOut && isDateOccupied(checkOut)) {
+      setAvailabilityError('Check-out date is not available')
+      return
+    }
+    if (checkIn && checkOut && isRangeOverlapping(checkIn, checkOut)) {
+      setAvailabilityError('Selected dates overlap with an existing booking')
+      return
+    }
+    setAvailabilityError(null)
     onReserve(data)
   }
 
@@ -74,7 +103,9 @@ export default function BookingSidebar({
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-2xl font-bold text-primary">{formatPrice(apartment.price)}</span>
+              <span className="text-2xl font-bold text-primary">
+                {formatPrice(apartment.price)}
+              </span>
               <span className="text-neutral-600">/night</span>
             </div>
 
@@ -89,9 +120,15 @@ export default function BookingSidebar({
                     id={checkInId}
                     type="date"
                     value={checkIn}
-                    onChange={(e) => onCheckInChange(e.target.value)}
+                    onChange={(e) => {
+                      onCheckInChange(e.target.value)
+                      setAvailabilityError(null)
+                      if (checkOut && e.target.value >= checkOut) {
+                        onCheckOutChange('')
+                      }
+                    }}
                     className="pl-10"
-                    min={new Date().toISOString().split('T')[0]}
+                    min={format(new Date(), 'yyyy-MM-dd')}
                   />
                 </div>
               </div>
@@ -105,9 +142,12 @@ export default function BookingSidebar({
                     id={checkOutId}
                     type="date"
                     value={checkOut}
-                    onChange={(e) => onCheckOutChange(e.target.value)}
+                    onChange={(e) => {
+                      onCheckOutChange(e.target.value)
+                      setAvailabilityError(null)
+                    }}
                     className="pl-10"
-                    min={checkIn || new Date().toISOString().split('T')[0]}
+                    min={checkIn || format(new Date(), 'yyyy-MM-dd')}
                   />
                 </div>
               </div>
@@ -124,13 +164,22 @@ export default function BookingSidebar({
                     max={apartment.guests}
                     value={guests}
                     onChange={(e) =>
-                      onGuestsChange(Math.max(1, Math.min(apartment.guests, Number(e.target.value))))
+                      onGuestsChange(
+                        Math.max(1, Math.min(apartment.guests, Number(e.target.value)))
+                      )
                     }
                     className="pl-10"
                   />
                 </div>
               </div>
             </div>
+
+            {availabilityError && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-error-light border border-error/20 mb-4">
+                <AlertTriangle className="h-4 w-4 text-error shrink-0" />
+                <p className="text-xs text-error">{availabilityError}</p>
+              </div>
+            )}
 
             <Separator className="my-4" />
 
@@ -167,9 +216,7 @@ export default function BookingSidebar({
                     {...register('email')}
                   />
                 </div>
-                {errors.email && (
-                  <p className="text-xs text-error mt-1">{errors.email.message}</p>
-                )}
+                {errors.email && <p className="text-xs text-error mt-1">{errors.email.message}</p>}
               </div>
               <div>
                 <Label htmlFor="phone" className="mb-1.5 block">
@@ -185,9 +232,7 @@ export default function BookingSidebar({
                     {...register('phone')}
                   />
                 </div>
-                {errors.phone && (
-                  <p className="text-xs text-error mt-1">{errors.phone.message}</p>
-                )}
+                {errors.phone && <p className="text-xs text-error mt-1">{errors.phone.message}</p>}
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { parseISO } from 'date-fns'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -24,8 +25,8 @@ export function generateBookingNumber(): string {
 }
 
 export function calculateNights(checkIn: string, checkOut: string): number {
-  const start = new Date(checkIn)
-  const end = new Date(checkOut)
+  const start = parseISO(checkIn)
+  const end = parseISO(checkOut)
   const diff = end.getTime() - start.getTime()
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
 }

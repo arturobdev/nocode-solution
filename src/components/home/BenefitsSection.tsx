@@ -1,41 +1,40 @@
 import { Shield, Clock, Headphones, DollarSign } from 'lucide-react'
-
-const benefits = [
-  {
-    icon: Shield,
-    title: 'Secure Booking',
-    description:
-      'Your payments and personal information are protected with industry-leading encryption and security measures.',
-  },
-  {
-    icon: Clock,
-    title: 'Instant Confirmation',
-    description:
-      'No waiting around. Get immediate booking confirmation and start planning your trip right away.',
-  },
-  {
-    icon: Headphones,
-    title: '24/7 Support',
-    description:
-      'Our dedicated support team is available around the clock to help with any questions or issues.',
-  },
-  {
-    icon: DollarSign,
-    title: 'Best Price Guarantee',
-    description:
-      'Find a lower price elsewhere? We will match it and give you an additional discount on your booking.',
-  },
-]
+import { useTranslation } from 'react-i18next'
 
 export default function BenefitsSection() {
+  const { t } = useTranslation()
+
+  const benefits = [
+    {
+      icon: Shield,
+      title: t('benefits.secureBooking'),
+      description: t('benefits.secureBookingDesc'),
+    },
+    {
+      icon: Clock,
+      title: t('benefits.instantConfirmation'),
+      description: t('benefits.instantConfirmationDesc'),
+    },
+    {
+      icon: Headphones,
+      title: t('benefits.support247'),
+      description: t('benefits.support247Desc'),
+    },
+    {
+      icon: DollarSign,
+      title: t('benefits.bestPrice'),
+      description: t('benefits.bestPriceDesc'),
+    },
+  ]
+
   return (
     <section className="py-16 lg:py-20 bg-neutral-50">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">Why StayFinder?</h2>
-          <p className="text-neutral-600 text-lg max-w-xl mx-auto">
-            Everything you need for a seamless booking experience
-          </p>
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">
+            {t('benefits.title')}
+          </h2>
+          <p className="text-neutral-600 text-lg max-w-xl mx-auto">{t('benefits.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

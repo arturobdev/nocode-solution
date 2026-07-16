@@ -1,4 +1,5 @@
 import { Quote } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { StarRating } from '@/components/ui/star-rating'
 
 const testimonials = [
@@ -26,14 +27,16 @@ const testimonials = [
 ]
 
 export default function TestimonialsSection() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-16 lg:py-20 bg-white">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">What Our Guests Say</h2>
-          <p className="text-neutral-600 text-lg max-w-xl mx-auto">
-            Real experiences from travelers around the world
-          </p>
+          <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-3">
+            {t('testimonials.title')}
+          </h2>
+          <p className="text-neutral-600 text-lg max-w-xl mx-auto">{t('testimonials.subtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

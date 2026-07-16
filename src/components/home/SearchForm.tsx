@@ -1,7 +1,8 @@
 import { useState, useId } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MapPin, Calendar, Users, Search, ChevronDown } from 'lucide-react'
-import { format } from 'date-fns'
+import { format, addDays, parseISO } from 'date-fns'
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 
 function getToday() {
@@ -9,19 +10,16 @@ function getToday() {
 }
 
 function getTomorrow() {
-  const d = new Date()
-  d.setDate(d.getDate() + 1)
-  return format(d, 'yyyy-MM-dd')
+  return format(addDays(new Date(), 1), 'yyyy-MM-dd')
 }
 
 function getMinCheckout(checkIn: string) {
   if (!checkIn) return getTomorrow()
-  const d = new Date(checkIn)
-  d.setDate(d.getDate() + 1)
-  return format(d, 'yyyy-MM-dd')
+  return format(addDays(parseISO(checkIn), 1), 'yyyy-MM-dd')
 }
 
 export default function SearchForm() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const destinationId = useId()
   const checkInId = useId()
@@ -55,7 +53,7 @@ export default function SearchForm() {
           htmlFor={destinationId}
           className="block text-sm font-medium text-neutral-700 mb-1.5"
         >
-          Destination
+          {t('hero.destination')}
         </label>
         <div className="relative">
           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
@@ -64,7 +62,7 @@ export default function SearchForm() {
             type="text"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            placeholder="Where are you going?"
+            placeholder={t('hero.destinationPlaceholder')}
             className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
           />
         </div>
@@ -72,7 +70,7 @@ export default function SearchForm() {
 
       <div className="flex-1 min-w-0">
         <label htmlFor={checkInId} className="block text-sm font-medium text-neutral-700 mb-1.5">
-          Check-in
+          {t('hero.checkIn')}
         </label>
         <div className="relative">
           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
@@ -94,7 +92,7 @@ export default function SearchForm() {
 
       <div className="flex-1 min-w-0">
         <label htmlFor={checkOutId} className="block text-sm font-medium text-neutral-700 mb-1.5">
-          Check-out
+          {t('hero.checkOut')}
         </label>
         <div className="relative">
           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
@@ -111,7 +109,7 @@ export default function SearchForm() {
 
       <div className="flex-1 min-w-0">
         <label htmlFor={guestsId} className="block text-sm font-medium text-neutral-700 mb-1.5">
-          Guests
+          {t('hero.guestsLabel')}
         </label>
         <div className="relative">
           <Users className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
@@ -123,7 +121,7 @@ export default function SearchForm() {
           >
             {Array.from({ length: 16 }, (_, i) => i + 1).map((n) => (
               <option key={n} value={n}>
-                {n} {n === 1 ? 'guest' : 'guests'}
+                {n} {n === 1 ? t('common.guest') : t('common.guests')}
               </option>
             ))}
           </select>
@@ -140,7 +138,7 @@ export default function SearchForm() {
         )}
       >
         <Search className="size-4" />
-        Search
+        {t('common.search')}
       </button>
     </form>
   )

@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { mockBookings, monthlyRevenue } from '@/data/mockBookings'
 import { useStore } from '@/store/useStore'
 import { formatPrice } from '@/lib/utils'
@@ -8,6 +9,7 @@ import BookingsTable from '@/components/admin/BookingsTable'
 import { CalendarCheck, TrendingUp, DollarSign, BarChart3 } from 'lucide-react'
 
 export default function AdminDashboardPage() {
+  const { t } = useTranslation()
   const { bookings } = useStore()
 
   const allBookings = useMemo(() => [...bookings, ...mockBookings], [bookings])
@@ -22,41 +24,41 @@ export default function AdminDashboardPage() {
 
     return [
       {
-        label: 'Total Bookings',
+        label: t('admin.totalBookings'),
         value: totalBookings,
         icon: CalendarCheck,
         change: '+12%',
         color: 'text-info',
       },
       {
-        label: 'Active Bookings',
+        label: t('admin.activeBookings'),
         value: activeBookings,
         icon: BarChart3,
         change: '+8%',
         color: 'text-success',
       },
       {
-        label: 'Revenue',
+        label: t('admin.revenue'),
         value: formatPrice(totalRevenue),
         icon: DollarSign,
         change: '+23%',
         color: 'text-primary',
       },
       {
-        label: 'Occupancy Rate',
+        label: t('admin.occupancyRate'),
         value: `${occupancyRate}%`,
         icon: TrendingUp,
         change: '+5%',
         color: 'text-warning',
       },
     ]
-  }, [allBookings])
+  }, [allBookings, t])
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-primary">Dashboard</h1>
-        <p className="text-neutral-600 mt-1">Manage your bookings and view analytics</p>
+        <h1 className="text-3xl font-bold text-primary">{t('admin.title')}</h1>
+        <p className="text-neutral-600 mt-1">{t('admin.subtitle')}</p>
       </div>
 
       <StatsCards stats={stats} />

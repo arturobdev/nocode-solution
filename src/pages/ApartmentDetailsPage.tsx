@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Star, MapPin, Users, Bed, Bath, Search, ChevronLeft } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { calculateNights } from '@/lib/utils'
 import { apartments } from '@/data/apartments'
 import { getReviewsByApartmentId } from '@/data/reviews'
@@ -10,11 +11,17 @@ import ImageGallery from '@/components/apartment/ImageGallery'
 import BookingSidebar from '@/components/apartment/BookingSidebar'
 import ReviewsSection from '@/components/apartment/ReviewsSection'
 import AmenitiesSection from '@/components/apartment/AmenitiesSection'
-import AvailabilitySection from '@/components/apartment/AvailabilitySection'
+import AvailabilityCalendar from '@/components/apartment/AvailabilityCalendar'
+import HostSection from '@/components/apartment/HostSection'
+import LocationMap from '@/components/apartment/LocationMap'
+import CancellationPolicy from '@/components/apartment/CancellationPolicy'
+import HouseRules from '@/components/apartment/HouseRules'
+import SafetySection from '@/components/apartment/SafetySection'
 import { ApartmentDetailsSkeleton } from '@/components/skeletons/ApartmentDetailsSkeleton'
 import type { GuestInfo } from '@/types'
 
 export default function ApartmentDetailsPage() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const apartment = apartments.find((a) => a.id === id)
@@ -75,12 +82,10 @@ export default function ApartmentDetailsPage() {
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <div className="text-center">
           <Search className="h-16 w-16 mx-auto text-neutral-200 mb-4" />
-          <h1 className="text-2xl font-bold text-primary mb-2">Apartment not found</h1>
-          <p className="text-neutral-600 mb-6">
-            The apartment you are looking for does not exist or has been removed.
-          </p>
+          <h1 className="text-2xl font-bold text-primary mb-2">{t('common.notFound')}</h1>
+          <p className="text-neutral-600 mb-6">{t('common.notFoundDesc')}</p>
           <Link to="/search">
-            <Button>Back to Search</Button>
+            <Button>{t('common.backToSearchBtn')}</Button>
           </Link>
         </div>
       </div>
@@ -101,7 +106,7 @@ export default function ApartmentDetailsPage() {
             className="inline-flex items-center text-sm text-neutral-600 hover:text-primary transition-colors"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
-            Back to search
+            {t('common.backToSearch')}
           </Link>
         </div>
 
@@ -118,29 +123,34 @@ export default function ApartmentDetailsPage() {
               <span className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-warning text-warning" />
                 <span className="font-medium text-primary">{apartment.rating}</span>(
-                {apartment.reviewCount} reviews)
+                {apartment.reviewCount} {t('common.reviews')})
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-600 mb-6">
               <span className="flex items-center gap-2">
                 <Bed className="h-5 w-5" />
-                {apartment.bedrooms} bedroom{apartment.bedrooms !== 1 ? 's' : ''}
+                {apartment.bedrooms}{' '}
+                {apartment.bedrooms !== 1 ? t('common.bedrooms') : t('common.bedroom')}
               </span>
               <span className="flex items-center gap-2">
                 <Bath className="h-5 w-5" />
-                {apartment.bathrooms} bathroom{apartment.bathrooms !== 1 ? 's' : ''}
+                {apartment.bathrooms}{' '}
+                {apartment.bathrooms !== 1 ? t('common.bathrooms') : t('common.bathroom')}
               </span>
               <span className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                Up to {apartment.guests} guests
+                {t('common.guests').charAt(0).toUpperCase() + t('common.guests').slice(1)}{' '}
+                {apartment.guests}
               </span>
             </div>
 
             <Separator className="my-8" />
 
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-primary mb-4">About this place</h2>
+              <h2 className="text-xl font-semibold text-primary mb-4">
+                {t('apartmentDetails.aboutThisPlace')}
+              </h2>
               <p className="text-neutral-600 leading-relaxed">{apartment.description}</p>
             </div>
 
@@ -150,7 +160,37 @@ export default function ApartmentDetailsPage() {
 
             <Separator className="my-8" />
 
-            <AvailabilitySection apartmentId={apartment.id} checkIn={checkIn} checkOut={checkOut} />
+            <AvailabilityCalendar
+              apartmentId={apartment.id}
+              checkIn={checkIn}
+              checkOut={checkOut}
+              onCheckInChange={setCheckIn}
+              onCheckOutChange={setCheckOut}
+            />
+
+            <Separator className="my-8" />
+
+            <HostSection
+              host={apartment.host}
+              rating={avgRating}
+              reviewCount={apartmentReviews.length}
+            />
+
+            <Separator className="my-8" />
+
+            <LocationMap city={apartment.city} country={apartment.country} />
+
+            <Separator className="my-8" />
+
+            <CancellationPolicy />
+
+            <Separator className="my-8" />
+
+            <HouseRules />
+
+            <Separator className="my-8" />
+
+            <SafetySection />
 
             <Separator className="my-8" />
 

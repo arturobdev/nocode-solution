@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Search, SlidersHorizontal } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -16,14 +17,8 @@ import { useSearchResults } from '@/hooks/useSearchResults'
 import { SearchSkeleton } from '@/components/skeletons/SearchSkeleton'
 import type { SortOption } from '@/hooks/useSearchResults'
 
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: 'popular', label: 'Popular' },
-  { value: 'price-low', label: 'Price: Low to High' },
-  { value: 'price-high', label: 'Price: High to Low' },
-  { value: 'rating', label: 'Rating: High to Low' },
-]
-
 export default function SearchResultsPage() {
+  const { t } = useTranslation()
   const [loading, setLoading] = useState(true)
   const {
     filters,
@@ -47,6 +42,13 @@ export default function SearchResultsPage() {
 
   if (loading) return <SearchSkeleton />
 
+  const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+    { value: 'popular', label: t('searchPage.popular') },
+    { value: 'price-low', label: t('searchPage.priceLowHigh') },
+    { value: 'price-high', label: t('searchPage.priceHighLow') },
+    { value: 'rating', label: t('searchPage.ratingHighLow') },
+  ]
+
   const filterControlsProps = {
     filters,
     onFiltersChange: setFilters,
@@ -64,7 +66,7 @@ export default function SearchResultsPage() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-primary flex items-center gap-2">
                   <SlidersHorizontal className="h-5 w-5" />
-                  Filters
+                  {t('searchPage.filters')}
                 </h2>
                 {hasActiveFilters && (
                   <Button
@@ -73,7 +75,7 @@ export default function SearchResultsPage() {
                     onClick={clearFilters}
                     className="text-xs text-neutral-600"
                   >
-                    Reset
+                    {t('searchPage.reset')}
                   </Button>
                 )}
               </div>
@@ -85,8 +87,8 @@ export default function SearchResultsPage() {
           <main className="flex-1 min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <h1 className="text-2xl font-bold text-primary">
-                {filteredApartments.length} apartment{filteredApartments.length !== 1 ? 's' : ''}{' '}
-                found
+                {filteredApartments.length}{' '}
+                {filteredApartments.length !== 1 ? t('common.resultsPlural') : t('common.results')}
               </h1>
 
               <div className="flex items-center gap-3">
@@ -110,7 +112,7 @@ export default function SearchResultsPage() {
                   onClick={() => setMobileFiltersOpen(true)}
                 >
                   <SlidersHorizontal className="h-4 w-4 mr-1" />
-                  Filters
+                  {t('searchPage.filters')}
                 </Button>
               </div>
             </div>
@@ -118,12 +120,10 @@ export default function SearchResultsPage() {
             {filteredApartments.length === 0 ? (
               <div className="text-center py-20">
                 <Search className="h-16 w-16 mx-auto text-neutral-200 mb-4" />
-                <h2 className="text-xl font-semibold text-primary mb-2">No apartments found</h2>
-                <p className="text-neutral-600 mb-6">
-                  Try adjusting your filters or search criteria
-                </p>
+                <h2 className="text-xl font-semibold text-primary mb-2">{t('common.noResults')}</h2>
+                <p className="text-neutral-600 mb-6">{t('common.tryAdjusting')}</p>
                 <Button onClick={clearFilters} variant="outline">
-                  Clear Filters
+                  {t('common.clearFilters')}
                 </Button>
               </div>
             ) : (
@@ -146,10 +146,10 @@ export default function SearchResultsPage() {
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 lg:hidden z-40">
         <Button onClick={() => setMobileFiltersOpen(true)} className="shadow-lg rounded-full px-6">
           <SlidersHorizontal className="h-4 w-4 mr-2" />
-          Filters
+          {t('searchPage.filters')}
           {hasActiveFilters && (
             <span className="ml-2 bg-white/20 text-secondary text-xs px-1.5 py-0.5 rounded-full">
-              Active
+              {t('searchPage.active')}
             </span>
           )}
         </Button>
@@ -160,13 +160,13 @@ export default function SearchResultsPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <SlidersHorizontal className="h-5 w-5" />
-              Filters
+              {t('searchPage.filters')}
             </DialogTitle>
           </DialogHeader>
           <FilterControls {...filterControlsProps} inDialog />
           <div className="pt-2">
             <Button onClick={() => setMobileFiltersOpen(false)} className="w-full">
-              Show {filteredApartments.length} result{filteredApartments.length !== 1 ? 's' : ''}
+              {t('searchPage.showResults')} ({filteredApartments.length})
             </Button>
           </div>
         </DialogContent>

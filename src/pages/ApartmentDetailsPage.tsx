@@ -34,6 +34,7 @@ export default function ApartmentDetailsPage() {
   const [checkOut, setCheckOut] = useState('')
   const [guests, setGuests] = useState(1)
   const [descExpanded, setDescExpanded] = useState(false)
+  const [mobileFormOpen, setMobileFormOpen] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 700)
@@ -293,6 +294,8 @@ export default function ApartmentDetailsPage() {
             onCheckOutChange={setCheckOut}
             onGuestsChange={setGuests}
             onReserve={handleReserve}
+            mobileFormOpen={mobileFormOpen}
+            onMobileFormOpenChange={setMobileFormOpen}
           />
         </div>
       </div>
@@ -301,13 +304,7 @@ export default function ApartmentDetailsPage() {
         price={apartment.price}
         rating={avgRating}
         reviewCount={apartmentReviews.length}
-        canReserve={canReserve}
-        onReserve={() => {
-          const el = document.querySelector('[data-booking-sidebar]')
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' })
-          }
-        }}
+        onReserve={() => setMobileFormOpen(true)}
       />
 
       <div className="h-20 lg:hidden" />

@@ -99,7 +99,7 @@
     "showResults": "Show results",
     "active": "Active"
   },
-    "apartmentDetails": {
+  "apartmentDetails": {
     "aboutThisPlace": "About this place",
     "aboutHost": "About your host",
     "whatThisPlaceOffers": "What this place offers",
@@ -113,7 +113,12 @@
     "datesSelected": "dates selected",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
-    "clear": "Clear"
+    "clear": "Clear",
+    "close": "Close",
+    "from": "From",
+    "to": "To",
+    "selectDate": "Select date",
+    "selectDates": "Select dates"
   },
   "bookingSidebar": {
     "checkIn": "Check-in",
@@ -230,6 +235,20 @@
     "statusPending": "Pending",
     "statusCancelled": "Cancelled",
     "statusCompleted": "Completed"
+  },
+  "auth": {
+    "loginTitle": "Admin Login",
+    "loginSubtitle": "Sign in to access the admin dashboard",
+    "email": "Email",
+    "emailPlaceholder": "admin@mail.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "loginButton": "Sign In",
+    "loggingIn": "Signing in...",
+    "invalidCredentials": "Invalid email or password",
+    "logout": "Logout"
   },
   "footer": {
     "tagline": "Discover and book the perfect stay for your next adventure. Comfort, quality, and unforgettable experiences await.",

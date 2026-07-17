@@ -3,7 +3,9 @@ import { CalendarDays, CircleCheck, CircleX } from 'lucide-react'
 import { format, startOfDay, parseISO } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
+import { Accordion, AccordionContent, AccordionItem } from '@/components/ui/accordion'
 import CalendarGrid from '@/components/apartment/CalendarGrid'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 function toLocalDate(dateStr: string): Date {
   return startOfDay(parseISO(dateStr))
@@ -25,6 +27,7 @@ export default function AvailabilityCalendar({
   onCheckOutChange,
 }: AvailabilityCalendarProps) {
   const { t } = useTranslation()
+  const isMobile = useMediaQuery('(max-width: 767px)')
 
   const checkInDate = useMemo(() => (checkIn ? toLocalDate(checkIn) : null), [checkIn])
   const checkOutDate = useMemo(() => (checkOut ? toLocalDate(checkOut) : null), [checkOut])
@@ -34,16 +37,18 @@ export default function AvailabilityCalendar({
     onCheckOutChange('')
   }, [onCheckInChange, onCheckOutChange])
 
-  return (
-    <section aria-labelledby="availability-heading">
-      <h2
-        id="availability-heading"
-        className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"
-      >
-        <CalendarDays className="h-5 w-5" />
-        {t('apartmentDetails.availability')}
-      </h2>
+  const datesSummary = useMemo(() => {
+    if (checkInDate && checkOutDate) {
+      return `${format(checkInDate, 'MMM d')} → ${format(checkOutDate, 'MMM d')}`
+    }
+    if (checkInDate) {
+      return `${format(checkInDate, 'MMM d')} → ...`
+    }
+    return null
+  }, [checkInDate, checkOutDate])
 
+  const calendarContent = (
+    <>
       {(checkIn || checkOut) && (
         <div className="flex items-center gap-3 mb-4 p-3 rounded-lg bg-primary/5 border border-primary/10">
           <div className="flex-1 text-sm">
@@ -94,6 +99,43 @@ export default function AvailabilityCalendar({
           {t('apartmentDetails.available')}
         </span>
       </div>
+    </>
+  )
+
+  if (isMobile) {
+    return (
+      <section aria-labelledby="availability-heading">
+        <Accordion type="single" collapsible defaultValue="availability">
+          <AccordionItem value="availability" className="border-none">
+            <div className="flex items-center justify-between">
+              <h2
+                id="availability-heading"
+                className="text-xl font-semibold text-primary flex items-center gap-2"
+              >
+                <CalendarDays className="h-5 w-5" />
+                {t('apartmentDetails.availability')}
+              </h2>
+              {datesSummary && (
+                <span className="text-xs text-primary font-medium mr-8">{datesSummary}</span>
+              )}
+            </div>
+            <AccordionContent className="pt-4">{calendarContent}</AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
+    )
+  }
+
+  return (
+    <section aria-labelledby="availability-heading">
+      <h2
+        id="availability-heading"
+        className="text-xl font-semibold text-primary mb-4 flex items-center gap-2"
+      >
+        <CalendarDays className="h-5 w-5" />
+        {t('apartmentDetails.availability')}
+      </h2>
+      {calendarContent}
     </section>
   )
 }

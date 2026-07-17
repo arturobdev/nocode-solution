@@ -73,20 +73,24 @@ export default function BookingDatePicker({
   const trigger = (
     <div className="grid grid-cols-2 border border-neutral-200 rounded-lg overflow-hidden cursor-pointer hover:border-neutral-300 transition-colors">
       <div className="px-3 py-2.5 text-left border-r border-neutral-200">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">Check-in</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">
+          {t('apartmentDetails.from', 'From')}
+        </p>
         <div className="flex items-center gap-1.5 mt-0.5">
           <Calendar className="h-3.5 w-3.5 text-neutral-400" />
           <p className={`text-sm ${checkIn ? 'text-primary' : 'text-neutral-400'}`}>
-            {checkIn ? formatDate(checkIn) : 'Select date'}
+            {checkIn ? formatDate(checkIn) : t('apartmentDetails.selectDate', 'Select date')}
           </p>
         </div>
       </div>
       <div className="px-3 py-2.5 text-left">
-        <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">Check-out</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">
+          {t('apartmentDetails.to', 'To')}
+        </p>
         <div className="flex items-center gap-1.5 mt-0.5">
           <Calendar className="h-3.5 w-3.5 text-neutral-400" />
           <p className={`text-sm ${checkOut ? 'text-primary' : 'text-neutral-400'}`}>
-            {checkOut ? formatDate(checkOut) : 'Select date'}
+            {checkOut ? formatDate(checkOut) : t('apartmentDetails.selectDate', 'Select date')}
           </p>
         </div>
       </div>
@@ -171,7 +175,7 @@ export default function BookingDatePicker({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="inset-0 m-0 h-full max-h-full w-full max-w-full rounded-none border-0 p-0 gap-0 flex flex-col data-[state=open]:slide-in-from-bottom-full data-[state=closed]:slide-out-to-bottom-full data-[state=open]:slide-in-from-left-0 data-[state=closed]:slide-out-to-left-0">
+        <DialogContent className="inset-0 m-0 h-full max-h-full w-full max-w-full rounded-none border-0 p-0 gap-0 flex flex-col translate-none data-[state=open]:slide-in-from-bottom-full data-[state=closed]:slide-out-to-bottom-full">
           <DialogTitle className="sr-only">Select dates</DialogTitle>
           <DialogDescription className="sr-only">
             Choose your check-in and check-out dates

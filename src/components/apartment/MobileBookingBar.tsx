@@ -7,7 +7,6 @@ interface MobileBookingBarProps {
   price: number
   rating: number
   reviewCount: number
-  canReserve: boolean
   onReserve: () => void
 }
 
@@ -15,7 +14,6 @@ export default function MobileBookingBar({
   price,
   rating,
   reviewCount,
-  canReserve,
   onReserve,
 }: MobileBookingBarProps) {
   const { t } = useTranslation()
@@ -36,7 +34,6 @@ export default function MobileBookingBar({
         </div>
         <Button
           onClick={onReserve}
-          disabled={!canReserve}
           className="shrink-0 px-6 py-2.5 text-sm font-semibold rounded-lg"
         >
           {t('common.reserveNow')}

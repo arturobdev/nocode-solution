@@ -99,7 +99,7 @@
     "showResults": "Mostrar resultados",
     "active": "Ativo"
   },
-    "apartmentDetails": {
+  "apartmentDetails": {
     "aboutThisPlace": "Sobre este lugar",
     "aboutHost": "Sobre seu anfitrião",
     "whatThisPlaceOffers": "O que este lugar oferece",
@@ -113,7 +113,12 @@
     "datesSelected": "datas selecionadas",
     "checkIn": "Check-in",
     "checkOut": "Check-out",
-    "clear": "Limpar"
+    "clear": "Limpar",
+    "close": "Fechar",
+    "from": "De",
+    "to": "Até",
+    "selectDate": "Selecionar data",
+    "selectDates": "Selecionar datas"
   },
   "bookingSidebar": {
     "checkIn": "Check-in",
@@ -230,6 +235,20 @@
     "statusPending": "Pendente",
     "statusCancelled": "Cancelada",
     "statusCompleted": "Concluída"
+  },
+  "auth": {
+    "loginTitle": "Login Admin",
+    "loginSubtitle": "Faça login para acessar o painel de administração",
+    "email": "E-mail",
+    "emailPlaceholder": "admin@mail.com",
+    "password": "Senha",
+    "passwordPlaceholder": "Digite sua senha",
+    "showPassword": "Mostrar senha",
+    "hidePassword": "Ocultar senha",
+    "loginButton": "Entrar",
+    "loggingIn": "Entrando...",
+    "invalidCredentials": "E-mail ou senha incorretos",
+    "logout": "Sair"
   },
   "footer": {
     "tagline": "Descubra e reserve a estadia perfeita para sua próxima aventura. Conforto, qualidade e experiências inesquecíveis aguardam por você.",

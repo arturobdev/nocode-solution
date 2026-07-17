@@ -3,7 +3,12 @@ import { CalendarDays, CircleCheck, CircleX } from 'lucide-react'
 import { format, startOfDay, parseISO } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { Accordion, AccordionContent, AccordionItem } from '@/components/ui/accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import CalendarGrid from '@/components/apartment/CalendarGrid'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 
@@ -105,21 +110,18 @@ export default function AvailabilityCalendar({
   if (isMobile) {
     return (
       <section aria-labelledby="availability-heading">
-        <Accordion type="single" collapsible defaultValue="availability">
+        <Accordion type="single" collapsible defaultValue="">
           <AccordionItem value="availability" className="border-none">
-            <div className="flex items-center justify-between">
-              <h2
-                id="availability-heading"
-                className="text-xl font-semibold text-primary flex items-center gap-2"
-              >
+            <AccordionTrigger className="py-3 text-xl font-semibold">
+              <span id="availability-heading" className="flex items-center gap-2">
                 <CalendarDays className="h-5 w-5" />
                 {t('apartmentDetails.availability')}
-              </h2>
+              </span>
               {datesSummary && (
-                <span className="text-xs text-primary font-medium mr-8">{datesSummary}</span>
+                <span className="text-xs text-primary font-medium">{datesSummary}</span>
               )}
-            </div>
-            <AccordionContent className="pt-4">{calendarContent}</AccordionContent>
+            </AccordionTrigger>
+            <AccordionContent className="pt-2">{calendarContent}</AccordionContent>
           </AccordionItem>
         </Accordion>
       </section>

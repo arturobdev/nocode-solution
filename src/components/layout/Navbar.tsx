@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { Menu, X, Globe } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
+import { useStore } from '@/store/useStore'
 import logo from '@/assets/logo.svg'
 import {
   Select,
@@ -22,11 +23,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const menuId = useId()
   const { t, i18n } = useTranslation()
+  const isAdminAuthenticated = useStore((state) => state.isAdminAuthenticated)
 
   const navLinks = [
     { to: '/', label: t('nav.home') },
     { to: '/search', label: t('nav.search') },
-    { to: '/admin', label: t('nav.admin') },
+    ...(isAdminAuthenticated ? [{ to: '/admin', label: t('nav.admin') }] : []),
   ]
 
   return (

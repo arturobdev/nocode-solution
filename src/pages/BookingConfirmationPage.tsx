@@ -15,6 +15,7 @@ export default function BookingConfirmationPage() {
   const location = useLocation()
   const booking = location.state?.booking as Booking | undefined
   const { addBooking } = useStore()
+  const isAdminAuthenticated = useStore((state) => state.isAdminAuthenticated)
   const addedRef = useRef(false)
   const [loading, setLoading] = useState(true)
 
@@ -68,12 +69,14 @@ export default function BookingConfirmationPage() {
             {t('bookingConfirmation.returnHome')}
           </Link>
         </Button>
-        <Button asChild className="w-full sm:w-auto">
-          <Link to="/admin">
-            <LayoutDashboard className="h-4 w-4" />
-            {t('bookingConfirmation.viewInAdmin')}
-          </Link>
-        </Button>
+        {isAdminAuthenticated && (
+          <Button asChild className="w-full sm:w-auto">
+            <Link to="/admin">
+              <LayoutDashboard className="h-4 w-4" />
+              {t('bookingConfirmation.viewInAdmin')}
+            </Link>
+          </Button>
+        )}
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { mockBookings, monthlyRevenue } from '@/data/mockBookings'
 import { useStore } from '@/store/useStore'
@@ -7,11 +8,19 @@ import StatsCards from '@/components/admin/StatsCards'
 import RevenueChart from '@/components/admin/RevenueChart'
 import BookingsTable from '@/components/admin/BookingsTable'
 import SEO from '@/components/seo/SEO'
-import { CalendarCheck, TrendingUp, DollarSign, BarChart3 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { CalendarCheck, TrendingUp, DollarSign, BarChart3, LogOut } from 'lucide-react'
 
 export default function AdminDashboardPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { bookings } = useStore()
+  const logoutAdmin = useStore((state) => state.logoutAdmin)
+
+  const handleLogout = () => {
+    logoutAdmin()
+    navigate('/admin/login')
+  }
 
   const allBookings = useMemo(() => [...bookings, ...mockBookings], [bookings])
 
@@ -58,9 +67,15 @@ export default function AdminDashboardPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       <SEO title="Admin Dashboard" noindex />
-      <div>
-        <h1 className="text-3xl font-bold text-primary">{t('admin.title')}</h1>
-        <p className="text-neutral-600 mt-1">{t('admin.subtitle')}</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-primary">{t('admin.title')}</h1>
+          <p className="text-neutral-600 mt-1">{t('admin.subtitle')}</p>
+        </div>
+        <Button variant="outline" onClick={handleLogout}>
+          <LogOut className="h-4 w-4" />
+          {t('auth.logout')}
+        </Button>
       </div>
 
       <StatsCards stats={stats} />

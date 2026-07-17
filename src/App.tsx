@@ -1,12 +1,14 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from '@/components/layout/Layout'
+import ProtectedRoute from '@/components/auth/ProtectedRoute'
 
 const HomePage = lazy(() => import('@/pages/HomePage'))
 const SearchResultsPage = lazy(() => import('@/pages/SearchResultsPage'))
 const ApartmentDetailsPage = lazy(() => import('@/pages/ApartmentDetailsPage'))
 const BookingConfirmationPage = lazy(() => import('@/pages/BookingConfirmationPage'))
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage'))
+const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'))
 
 function PageLoader() {
   return (
@@ -21,12 +23,20 @@ export default function App() {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
+          <Route path="/admin/login" element={<AdminLoginPage />} />
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="/apartment/:id" element={<ApartmentDetailsPage />} />
             <Route path="/booking-confirmation" element={<BookingConfirmationPage />} />
-            <Route path="/admin" element={<AdminDashboardPage />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboardPage />
+                </ProtectedRoute>
+              }
+            />
           </Route>
         </Routes>
       </Suspense>

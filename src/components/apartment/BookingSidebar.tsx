@@ -2,15 +2,16 @@ import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Users, Calendar, Shield, Mail, Phone, User, AlertTriangle } from 'lucide-react'
+import { Users, Shield, Mail, Phone, User, AlertTriangle } from 'lucide-react'
 import { formatPrice, getInitials } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import BookingDatePicker from '@/components/apartment/BookingDatePicker'
 import { generateOccupiedDates, isDateRangeOverlappingOccupied } from '@/lib/availabilityUtils'
-import { format, isSameDay, parseISO } from 'date-fns'
+import { parseISO, isSameDay } from 'date-fns'
 import type { Apartment } from '@/types'
 
 const guestInfoSchema = z.object({
@@ -54,8 +55,6 @@ export default function BookingSidebar({
   onGuestsChange,
   onReserve,
 }: BookingSidebarProps) {
-  const checkInId = useId()
-  const checkOutId = useId()
   const guestsId = useId()
   const [availabilityError, setAvailabilityError] = useState<string | null>(null)
 
@@ -110,47 +109,23 @@ export default function BookingSidebar({
             </div>
 
             <div className="space-y-4 mb-6">
-              <div>
-                <Label htmlFor={checkInId} className="mb-1.5 block">
-                  Check-in
-                </Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-600" />
-                  <Input
-                    id={checkInId}
-                    type="date"
-                    value={checkIn}
-                    onChange={(e) => {
-                      onCheckInChange(e.target.value)
-                      setAvailabilityError(null)
-                      if (checkOut && e.target.value >= checkOut) {
-                        onCheckOutChange('')
-                      }
-                    }}
-                    className="pl-10"
-                    min={format(new Date(), 'yyyy-MM-dd')}
-                  />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor={checkOutId} className="mb-1.5 block">
-                  Check-out
-                </Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-600" />
-                  <Input
-                    id={checkOutId}
-                    type="date"
-                    value={checkOut}
-                    onChange={(e) => {
-                      onCheckOutChange(e.target.value)
-                      setAvailabilityError(null)
-                    }}
-                    className="pl-10"
-                    min={checkIn || format(new Date(), 'yyyy-MM-dd')}
-                  />
-                </div>
-              </div>
+              <BookingDatePicker
+                apartmentId={apartment.id}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                onCheckInChange={(value) => {
+                  onCheckInChange(value)
+                  setAvailabilityError(null)
+                  if (checkOut && value >= checkOut) {
+                    onCheckOutChange('')
+                  }
+                }}
+                onCheckOutChange={(value) => {
+                  onCheckOutChange(value)
+                  setAvailabilityError(null)
+                }}
+              />
+
               <div>
                 <Label htmlFor={guestsId} className="mb-1.5 block">
                   Guests

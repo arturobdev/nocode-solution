@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MapPin, Star, Users, Heart } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
@@ -7,6 +8,7 @@ import type { Apartment } from '@/types'
 
 function ApartmentCard({ apartment }: { apartment: Apartment }) {
   const { t } = useTranslation()
+  const [liked, setLiked] = useState(false)
 
   return (
     <li className="min-w-[280px] sm:min-w-0">
@@ -15,10 +17,11 @@ function ApartmentCard({ apartment }: { apartment: Apartment }) {
           <img src={apartment.image} alt={apartment.name} className="w-full h-full object-cover" />
           <button
             type="button"
+            onClick={() => setLiked(!liked)}
             className="absolute top-3 right-3 size-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center transition-colors hover:bg-white"
-            aria-label="Add to favorites"
+            aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}
           >
-            <Heart className="size-4 text-neutral-600" />
+            <Heart className={cn('size-4', liked ? 'fill-error text-error' : 'text-neutral-600')} />
           </button>
         </div>
 

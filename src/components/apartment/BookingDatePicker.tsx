@@ -74,7 +74,7 @@ export default function BookingDatePicker({
     <div className="grid grid-cols-2 border border-neutral-200 rounded-lg overflow-hidden cursor-pointer hover:border-neutral-300 transition-colors">
       <div className="px-3 py-2.5 text-left border-r border-neutral-200">
         <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">
-          {t('apartmentDetails.from', 'From')}
+          {t('apartmentDetails.checkIn', 'Check-in')}
         </p>
         <div className="flex items-center gap-1.5 mt-0.5">
           <Calendar className="h-3.5 w-3.5 text-neutral-400" />
@@ -85,7 +85,7 @@ export default function BookingDatePicker({
       </div>
       <div className="px-3 py-2.5 text-left">
         <p className="text-[10px] font-semibold uppercase tracking-wide text-primary">
-          {t('apartmentDetails.to', 'To')}
+          {t('apartmentDetails.checkOut', 'Check-out')}
         </p>
         <div className="flex items-center gap-1.5 mt-0.5">
           <Calendar className="h-3.5 w-3.5 text-neutral-400" />

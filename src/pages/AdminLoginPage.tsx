@@ -65,7 +65,10 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-8">
           <div className="text-center mb-8">
-            <img src={logo} alt="StayFinder" className="h-8 w-auto mx-auto" />
+            <div className="flex items-center justify-center gap-2">
+              <img src={logo} alt="StayFinder" className="h-8 w-auto" />
+              <span className="text-2xl font-bold tracking-tight text-primary">StayFinder</span>
+            </div>
             <p className="text-neutral-600 mt-2">{t('auth.loginSubtitle')}</p>
           </div>
 

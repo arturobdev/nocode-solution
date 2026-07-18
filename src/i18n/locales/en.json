@@ -34,7 +34,10 @@
     "viewAllReviews": "View all {{count}} reviews",
     "learnMore": "Learn more",
     "viewLargerMap": "View larger map",
-    "openInMap": "Open in Maps"
+    "openInMap": "Open in Maps",
+    "notFound404Title": "Page not found",
+    "notFound404Desc": "The page you are looking for doesn't exist or has been moved.",
+    "backToHome": "Back to Home"
   },
   "nav": {
     "home": "Home",

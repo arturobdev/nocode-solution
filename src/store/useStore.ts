@@ -55,7 +55,10 @@ export const useStore = create<AppState>()(
     {
       name: 'stayfinder-auth',
       storage: createJSONStorage(() => sessionStorage),
-      partialize: (state) => ({ isAdminAuthenticated: state.isAdminAuthenticated }),
+      partialize: (state) => ({
+        bookings: state.bookings,
+        isAdminAuthenticated: state.isAdminAuthenticated,
+      }),
     }
   )
 )

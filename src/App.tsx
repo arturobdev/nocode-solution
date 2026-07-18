@@ -9,6 +9,7 @@ const ApartmentDetailsPage = lazy(() => import('@/pages/ApartmentDetailsPage'))
 const BookingConfirmationPage = lazy(() => import('@/pages/BookingConfirmationPage'))
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage'))
 const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'))
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 function PageLoader() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </Suspense>

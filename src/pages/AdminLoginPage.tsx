@@ -4,19 +4,25 @@ import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import type { TFunction } from 'i18next'
 import { Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useStore } from '@/store/useStore'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import SEO from '@/components/seo/SEO'
+import logo from '@/assets/logo.svg'
 
-const loginSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Please enter a valid email'),
-  password: z.string().min(1, 'Password is required'),
-})
+const loginSchema = (t: TFunction) =>
+  z.object({
+    email: z.string().min(1, t('auth.emailRequired')).email(t('auth.emailInvalid')),
+    password: z.string().min(1, t('auth.passwordRequired')),
+  })
 
-type LoginValues = z.infer<typeof loginSchema>
+type LoginValues = {
+  email: string
+  password: string
+}
 
 export default function AdminLoginPage() {
   const { t } = useTranslation()
@@ -35,7 +41,7 @@ export default function AdminLoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(loginSchema(t)),
   })
 
   const onSubmit = async (data: LoginValues) => {
@@ -59,7 +65,7 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-primary">StayFinder</h1>
+            <img src={logo} alt="StayFinder" className="h-8 w-auto mx-auto" />
             <p className="text-neutral-600 mt-2">{t('auth.loginSubtitle')}</p>
           </div>
 

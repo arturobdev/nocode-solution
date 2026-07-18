@@ -251,6 +251,9 @@
     "loginButton": "Iniciar Sesión",
     "loggingIn": "Iniciando sesión...",
     "invalidCredentials": "Correo o contraseña incorrectos",
+    "emailRequired": "El correo electrónico es obligatorio",
+    "emailInvalid": "Por favor ingresa un correo válido",
+    "passwordRequired": "La contraseña es obligatoria",
     "logout": "Cerrar Sesión"
   },
   "footer": {

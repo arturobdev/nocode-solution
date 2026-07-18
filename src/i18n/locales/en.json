@@ -251,6 +251,9 @@
     "loginButton": "Sign In",
     "loggingIn": "Signing in...",
     "invalidCredentials": "Invalid email or password",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email",
+    "passwordRequired": "Password is required",
     "logout": "Logout"
   },
   "footer": {

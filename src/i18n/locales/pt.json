@@ -251,6 +251,9 @@
     "loginButton": "Entrar",
     "loggingIn": "Entrando...",
     "invalidCredentials": "E-mail ou senha incorretos",
+    "emailRequired": "O e-mail é obrigatório",
+    "emailInvalid": "Por favor insira um e-mail válido",
+    "passwordRequired": "A senha é obrigatória",
     "logout": "Sair"
   },
   "footer": {

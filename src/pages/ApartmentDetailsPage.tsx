@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { Star, MapPin, Users, Bed, Bath, Search, ChevronLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { calculateNights } from '@/lib/utils'
+import { calculateNights, calculateBookingPrice } from '@/lib/utils'
 import { apartments } from '@/data/apartments'
 import { getReviewsByApartmentId } from '@/data/reviews'
 import { Button } from '@/components/ui/button'
@@ -46,10 +46,10 @@ export default function ApartmentDetailsPage() {
     return n > 0 ? n : 0
   }, [checkIn, checkOut])
 
-  const subtotal = useMemo(() => (apartment ? apartment.price * nights : 0), [apartment, nights])
-  const taxes = Math.round(subtotal * 0.12)
-  const fees = nights > 0 ? 45 : 0
-  const total = subtotal + taxes + fees
+  const { subtotal, taxes, fees, total } = useMemo(
+    () => calculateBookingPrice(apartment?.price ?? 0, nights),
+    [apartment, nights]
+  )
 
   const canReserve = checkIn !== '' && checkOut !== '' && nights > 0 && guests >= 1
 

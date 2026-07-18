@@ -31,6 +31,28 @@ export function calculateNights(checkIn: string, checkOut: string): number {
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
 }
 
+export interface BookingPriceBreakdown {
+  subtotal: number
+  taxes: number
+  fees: number
+  total: number
+}
+
+const TAX_RATE = 0.12
+const SERVICE_FEE = 45
+
+export function calculateBookingPrice(
+  pricePerNight: number,
+  nights: number
+): BookingPriceBreakdown {
+  const subtotal = nights > 0 ? pricePerNight * nights : 0
+  const taxes = Math.round(subtotal * TAX_RATE)
+  const fees = nights > 0 ? SERVICE_FEE : 0
+  const total = subtotal + taxes + fees
+
+  return { subtotal, taxes, fees, total }
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

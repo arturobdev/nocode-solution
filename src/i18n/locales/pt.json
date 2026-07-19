@@ -268,5 +268,10 @@
     "copyright": "© 2026 StayFinder. Todos os direitos reservados.",
     "privacy": "Política de Privacidade",
     "terms": "Termos de Serviço"
+  },
+  "cookieBanner": {
+    "message": "Utilizamos cookies para melhorar sua experiência no StayFinder. Ao continuar navegando, você concorda com o uso de cookies.",
+    "accept": "Aceitar",
+    "reject": "Rejeitar"
   }
 }

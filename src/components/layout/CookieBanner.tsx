@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Cookie } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const COOKIE_CONSENT_KEY = 'sf-cookie-consent'
@@ -27,14 +28,17 @@ export default function CookieBanner() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-neutral-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] transition-transform duration-300 ease-out ${animateIn ? 'translate-y-0' : 'translate-y-full'}`}
+      className={`fixed bottom-6 left-4 right-4 z-[60] sm:left-6 sm:right-auto sm:max-w-md transition-all duration-300 ease-out ${animateIn ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-neutral-600 text-center sm:text-left">
-          {t('cookieBanner.message')}
-        </p>
-        <div className="flex items-center gap-3 shrink-0">
-          <Button variant="ghost" size="sm" onClick={() => handleConsent('rejected')}>
+      <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-5 sm:p-6">
+        <div className="flex items-start gap-4">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+            <Cookie className="size-5 text-primary" />
+          </div>
+          <p className="text-sm leading-relaxed text-neutral-600">{t('cookieBanner.message')}</p>
+        </div>
+        <div className="mt-5 flex items-center gap-3 sm:justify-end">
+          <Button variant="outline" size="sm" onClick={() => handleConsent('rejected')}>
             {t('cookieBanner.reject')}
           </Button>
           <Button size="sm" onClick={() => handleConsent('accepted')}>
